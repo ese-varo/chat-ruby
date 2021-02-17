@@ -3,4 +3,5 @@ class User < ApplicationRecord
     c.crypto_provider = Authlogic::CryptoProviders::Sha512
   end
 
+  has_many :messages
 end

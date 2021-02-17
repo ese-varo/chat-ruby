@@ -11,24 +11,25 @@
   </head>
 
   <body>
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <%= link_to 'Ruby-Chat', root_path, class: 'navbar-brand' %>
+        </div>
+        <div id="navbar">
+          <ul class="nav navbar-nav pull-right">
+            <% if current_user %>
+              <li><span><%= current_user.email %></span></li>
+              <li class="nav-link"><%= link_to 'Sign Out', sign_out_path, method: :delete %></li>
+            <% else %>
+              <li class="nav-link"><%= link_to 'Sign In', sign_in_path %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
     <div class="container">
-    <div class="navbar-header">
-      <%= link_to 'Logical', root_path, class: 'navbar-brand' %>
+      <%= yield %>
     </div>
-    <div id="navbar">
-      <ul class="nav navbar-nav">
-        <li><%= link_to 'Home', root_path %></li>
-      </ul>
-      <ul class="nav navbar-nav pull-right">
-        <% if current_user %>
-          <li><span><%= current_user.email %></span></li>
-          <li><%= link_to 'Sign Out', sign_out_path, method: :delete %></li>
-        <% else %>
-          <li><%= link_to 'Sign In', sign_in_path %></li>
-        <% end %>
-      </ul>
-    </div>
-    </div>
-    <%= yield %>
   </body>
 </html>

@@ -4,4 +4,5 @@ class User < ApplicationRecord
   end
 
   has_many :messages
+  has_many :conversations, :through => :participants
 end

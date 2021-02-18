@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_17_204446) do
+ActiveRecord::Schema.define(version: 2021_02_18_053621) do
 
   create_table "conversations", force: :cascade do |t|
     t.string "status"
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(version: 2021_02_17_204446) do
     t.string "persistence_token"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
   add_foreign_key "messages", "conversations"

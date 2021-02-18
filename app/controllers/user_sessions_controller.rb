@@ -4,7 +4,7 @@ class UserSessionsController < ApplicationController
   end
 
   def create
-    @user_session = UserSession.new(user_session_params)
+    @user_session = UserSession.new(user_session_params.to_h)
     if @user_session.save
       flash[:success] = "Welcome back!"
       redirect_to root_path
@@ -22,6 +22,6 @@ class UserSessionsController < ApplicationController
   private
 
   def user_session_params
-    params.require(:user_session).permit(:email, :password, :remember_me)
+    params.require(:user_session).permit(:username, :password, :remember_me)
   end
 end

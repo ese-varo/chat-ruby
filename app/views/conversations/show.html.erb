@@ -1,0 +1,22 @@
+<h2>
+  Conversation with fulanito
+</h2>
+<div class="chat-box">
+  <section class="chat-box__content">
+    <% @conversation.messages.each do |message| %>
+      <p><%= message.content %> 
+         <%= @user_names[message.user_id] %></p>
+    <% end %>
+  </section>
+
+  <section class="chat-box__input">
+    <%= form_with model: @message, url: messages_path do |form| %>
+      <div class="input-group mb-3">
+        <%= form.text_field :content, class: 'form-control' %>
+        <%= form.submit 'Send', class: 'btn btn-info' %>
+      </div>
+    <% end %>
+  </section>
+</div>
+</br>
+<%= link_to 'Home page', root_path, class: 'btn btn-sm btn-outline-secondary' %>

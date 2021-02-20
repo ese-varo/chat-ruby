@@ -1,3 +1,15 @@
 // Place all the styles related to the Conversations controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.chat-box {
+  &__content {
+    background-color: gainsboro;
+    min-height: 75vh;
+    // height: 90%;
+  }
+
+  &__input {
+    height: 8%;
+  }
+}

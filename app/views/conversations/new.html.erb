@@ -1,0 +1,21 @@
+<h2>
+  Conversation with fulanito
+</h2>
+<div class="chat-box">
+  <section class="chat-box__content">
+    
+  </section>
+  <section class="chat-box__input">
+    
+    <%= form_with model: @comment do |form| %>
+      <div class="input-group mb-3">
+        <%= form.text_field :content, class: 'form-control' %>
+        <%= form.submit 'Send', class: 'btn btn-info' %>
+      </div>
+    <% end %>
+  </section>
+</div>
+</br>
+<%= link_to 'Home page', root_path, class: 'btn btn-sm btn-outline-secondary' %>
+
+

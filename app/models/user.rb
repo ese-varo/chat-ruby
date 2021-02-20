@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_many :messages
-  has_many :conversations, :through => :participants
+  has_many :participants
+  has_many :conversations, through: :participants
 
   acts_as_authentic do |c|
     c.crypto_provider = Authlogic::CryptoProviders::Sha512

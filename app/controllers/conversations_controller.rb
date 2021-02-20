@@ -4,6 +4,7 @@ class ConversationsController < ApplicationController
   end
 
   def new
+    @users = User.all
   end
 
   def show
@@ -12,16 +13,11 @@ class ConversationsController < ApplicationController
   end
 
   def create
-    @conversation = current_user.conversations.build
-
-    if @conversation.save
-      byebug
-      @conversation.users << User.all.find(conversation_params)
-
-      redirect_to conversation_path(@conversation)
-    else
-      render :new
-    end
+    receiver = User.find(params[:receiver_id])
+    @conversation = current_user.conversations.create
+    @conversation.users << receiver
+    byebug
+    redirect_to conversation_path(@conversation)
   end
 
   private
@@ -30,10 +26,6 @@ class ConversationsController < ApplicationController
   end
 
   def conversation_params
-    params.permit(:eluser_id)
-  end
-
-  def participant_params(conversation)
-    { conversation_id: conversation.id, user_id: current_user.id }
+    params.require(:conversation).permit(:receiver_id)
   end
 end

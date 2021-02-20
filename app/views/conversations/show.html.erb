@@ -10,7 +10,7 @@
   </section>
 
   <section class="chat-box__input">
-    <%= form_with model: @message, url: messages_path do |form| %>
+    <%= form_with model: @message, url: conversation_messages_path do |form| %>
       <div class="input-group mb-3">
         <%= form.text_field :content, class: 'form-control' %>
         <%= form.submit 'Send', class: 'btn btn-info' %>

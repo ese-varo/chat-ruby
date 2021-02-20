@@ -1,21 +1,21 @@
-<h2>
-  Conversation with fulanito
-</h2>
-<div class="chat-box">
-  <section class="chat-box__content">
-    
-  </section>
-  <section class="chat-box__input">
-    
-    <%= form_with model: @comment do |form| %>
-      <div class="input-group mb-3">
-        <%= form.text_field :content, class: 'form-control' %>
-        <%= form.submit 'Send', class: 'btn btn-info' %>
-      </div>
+<p>Who do you want to chat with?</p>
+<section>
+  <ul class="list-group">
+    <% @users.each do |user| %>
+      <% unless user == current_user %>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+
+          <%= user.username %>
+          <span class="">
+            <%= form_with model: @conversation, url: conversations_url do |form| %>
+              <%= form.hidden_field :receiver_id, :value => user.id %>
+              <%= form.submit %>
+            <% end %>
+          </span>
+        </li>
+      <% end %>
     <% end %>
-  </section>
-</div>
-</br>
-<%= link_to 'Home page', root_path, class: 'btn btn-sm btn-outline-secondary' %>
-
-
+  </ul>
+  </br>
+  <%= link_to 'Home page', root_path, class: 'btn btn-sm btn-outline-secondary' %>
+</section>

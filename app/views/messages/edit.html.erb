@@ -1,0 +1,9 @@
+<%= form_with model: [@conversation, @message] do |form| %>
+  <div class="input-group mb-3">
+    <%= form.label :content, 'Message: ' %>
+    <%= form.text_field :content, class: 'form-control' %>
+  </div>
+  <div class="input-group mb-3">
+    <%= form.submit 'Save', class: 'btn btn-warning' %>
+  </div>
+<% end %>

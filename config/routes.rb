@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create]
   resources :user_sessions, only: [:new, :create, :destroy]
   resources :conversations do
-    resources :messages, only: [:new, :create, :destroy]
+    resources :messages
   end
 
   delete '/sign_out', to: 'user_sessions#destroy', as: :sign_out

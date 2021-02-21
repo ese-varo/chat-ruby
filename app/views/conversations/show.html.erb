@@ -1,16 +1,26 @@
 <h2>
-  Conversation with fulanito
+  <%= @conversation.name %> (with: 
+  <% @conversation.users.each do |user| %>
+    <%= "#{user.username} " unless user.id == current_user.id %>
+  <% end %>)
+  <span><%= link_to 'Edit', edit_conversation_path, class: 'btn btn-secondary' %></span>
 </h2>
 <div class="chat-box">
   <section class="chat-box__content">
     <% @conversation.messages.each do |message| %>
-      <p><%= message.content %> 
-         <%= @user_names[message.user_id] %></p>
+      <p>
+        <%= message.content %> <%= @user_names[message.user_id] %>
+        <span class=""><%= link_to 'Update', edit_conversation_message_path(message),
+            class: 'btn btn-primary btn-sm' %></span>
+        <span class="">
+          <%= link_to 'Delete', [@conversation, message], method: :delete, class: 'btn btn-danger btn-sm' %>
+        </span>
+      </p>
     <% end %>
   </section>
 
   <section class="chat-box__input">
-    <%= form_with model: @message, url: conversation_messages_path do |form| %>
+    <%= form_with model: @message, url: conversation_messages_path(@conversation) do |form| %>
       <div class="input-group mb-3">
         <%= form.text_field :content, class: 'form-control' %>
         <%= form.submit 'Send', class: 'btn btn-info' %>

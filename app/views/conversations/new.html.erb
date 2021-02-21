@@ -9,7 +9,7 @@
           <span class="">
             <%= form_with model: @conversation, url: conversations_url do |form| %>
               <%= form.hidden_field :receiver_id, :value => user.id %>
-              <%= form.submit %>
+              <%= form.submit 'Chat', class: 'btn btn-primary btn-sm' %>
             <% end %>
           </span>
         </li>

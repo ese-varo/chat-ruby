@@ -1,9 +1,27 @@
-<%= form_with model: [@conversation, @message] do |form| %>
-  <div class="input-group mb-3">
-    <%= form.label :content, 'Message: ' %>
-    <%= form.text_field :content, class: 'form-control' %>
+<div class="card">
+  <div class="card-body">
+    <%= form_with model: [@conversation, @message] do |form| %>
+      <div class="mb-3">
+        <%= form.label :content, 'Message: ', class: 'form-label' %>
+        <%= form.text_field :content, class: 'form-control' %>
+      </div>
+      <% if @message.image.attached? %>
+        <div class="mb-3">
+          <image src="<%=(url_for(@message.image))%>" class="card-img">
+        </div>
+        <div class="mb-3 form-check">
+          <%= form.check_box :remove_asset, class: 'form-check-input' %>
+          <%= form.label 'Remove image', class: 'form-check-label' %>
+        </div>
+        <div class="mb-3">
+          <%= form.label :image, 'Change Image: ', class: 'form-label' %>
+        <% else %>
+          <%= form.label :image, 'Add Image: ', class: 'form-label' %>
+        <% end %>
+        <%= form.file_field :image, class: 'form-control' %>
+        </br>
+        <%= form.submit 'Save', class: 'btn btn-warning' %>
+        </div>
+      <% end %>
   </div>
-  <div class="input-group mb-3">
-    <%= form.submit 'Save', class: 'btn btn-warning' %>
-  </div>
-<% end %>
+</div>

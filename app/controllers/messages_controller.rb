@@ -1,10 +1,12 @@
 class MessagesController < ApplicationController
-  # before_action :message, except: %i!edit update destroy!
   before_action :message, except: :create
   before_action :conversation
 
   def create
     @conversation.messages.create(new_message_params.merge({user_id: current_user.id}))
+
+    # send_new_message_notification_email
+
     redirect_to conversation_path(@conversation)
   end
 
@@ -31,6 +33,14 @@ class MessagesController < ApplicationController
   end
 
   private
+
+  def send_new_message_notification_email
+    @conversation.users.each do |user|
+      unless user == current_user
+        ConversationMailerPreview.new_message_email_preview(user).deliver 
+      end
+    end
+  end
 
   def message_params
     params.require(:message).permit(:content, :conversation_id, :image)

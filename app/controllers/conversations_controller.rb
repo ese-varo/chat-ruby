@@ -30,6 +30,9 @@ class ConversationsController < ApplicationController
     receiver = User.find(params[:receiver_id])
     @conversation = current_user.conversations.create
     @conversation.users << receiver
+
+    # ConversationMailerPreview.new_conversation_email_preview(receiver).deliver
+
     render :edit
   end
 

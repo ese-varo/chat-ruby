@@ -6,7 +6,11 @@ class Conversation < ApplicationRecord
   VALID_STATUS = ['public', 'private']
   validates :status, presence: true, inclusion: { in: VALID_STATUS }
 
-  def private?
-    status == 'private'
+  def public?
+    status == 'public'
+  end
+
+  def current_user_not_in?(user)
+    !self.users.include?(user)
   end
 end

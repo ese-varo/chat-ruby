@@ -13,6 +13,8 @@ class MessagesController < ApplicationController
 
   def update
     @message.update(message_params)
+    # byebug
+    @message.image.purge if params[:message][:remove_asset] == '1'
     redirect_to @conversation
   end
 

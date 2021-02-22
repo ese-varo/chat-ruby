@@ -1,7 +1,15 @@
-<%= form_with model: @conversation do |form| %>
-  <div class="input-group mb-3">
-    <%= form.label :name, 'Conversation title:' %>
-    <%= form.text_field :name, class: 'form-control' %>
-    <%= form.submit 'Save', class: 'btn btn-warning' %>
-  </div>
-<% end %>
+<div class="card message">
+  <%= form_with model: @conversation do |form| %>
+    <div class="card-body">
+      <div class="card-text">
+        <%= form.label :name, 'Conversation title:', class: 'form-label' %>
+        <%= form.text_field :name, class: 'form-control' %>
+        <%= form.label :status_public, "Public" %>
+        <%= form.radio_button :status, "public" %>
+        <%= form.label :status_private, "Private" %>
+        <%= form.radio_button :status, "private" %>
+      </div>
+      <%= form.submit 'Save', class: 'btn btn-warning mt-4' %>
+    </div>
+  <% end %>
+</div>

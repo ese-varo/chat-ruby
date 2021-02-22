@@ -1,5 +1,5 @@
 class ConversationsController < ApplicationController
-  before_action :conversation, only: %i!show edit update destroy!
+  before_action :conversation, only: %i!show edit update destroy join!
 
   def index
     @conversations = Conversation.all
@@ -14,6 +14,11 @@ class ConversationsController < ApplicationController
   end
 
   def edit
+  end
+
+  def join
+    @conversation.users << current_user
+    redirect_to conversation_path(@conversation)
   end
 
   def update
@@ -39,7 +44,7 @@ class ConversationsController < ApplicationController
   end
 
   def conversation_params
-    params.require(:conversation).permit(:receiver_id, :name)
+    params.require(:conversation).permit(:receiver_id, :name, :status)
   end
 
   def conversation

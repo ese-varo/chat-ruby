@@ -4,12 +4,30 @@
 
 .chat-box {
   &__content {
-    background-color: gainsboro;
+    // background-color: gainsboro;
     min-height: 75vh;
     // height: 90%;
+
+    .messager {
+      font-weight: 600;
+    }
   }
+
 
   &__input {
     height: 8%;
   }
+}
+
+.message {
+  background-color: yellow;
+}
+
+.conversation {
+  background-color: #D6F7F8;
+}
+
+.removed {
+  text-decoration: line-through;
+  font-style: italic;
 }

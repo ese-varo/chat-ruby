@@ -1,0 +1,12 @@
+<ul class="list-group">
+  <% conversations.each do |conversation| %>
+    <% unless conversation.private? %>
+      <li class="list-group-item d-flex justify-content-between align-items-center conversation">
+        <p><%= conversation.name || conversation.id %></p>
+        <div class="btn-group float-right" role="group">
+          <%= link_to 'Join', conversation, class: 'btn btn-info btn-sm' %>
+        </div>
+      </li>
+    <% end %>
+  <% end %>
+</ul>

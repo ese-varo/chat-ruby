@@ -1,11 +1,11 @@
 class MessagesController < ApplicationController
+  before_action :require_login, :conversation
   before_action :message, except: :create
-  before_action :conversation
+  after_action  :notification, only: :create
 
   def create
-    @conversation.messages.create(message_params)
-    # send_new_message_notification_email
-
+    @message = @conversation.messages.create(message_params)
+    @message.fill_emojis
     redirect_to conversation_path(@conversation)
   end
 
@@ -32,10 +32,22 @@ class MessagesController < ApplicationController
 
   private
 
+  def notification
+    send_new_message_notification_email
+    unless @message.user_id == current_user.id
+      conversation = Conversation.find(@message.conversation_id)
+      send_notification if current_user.conversations.include?(conversation)
+    end
+  end
+
+  def send_notification
+    flash[:success] = "You have a new message at conversation: #{@conversation.title}"
+  end
+
   def send_new_message_notification_email
     @conversation.users.each do |user|
       unless user == current_user
-        ConversationMailerPreview.new_message_email_preview(user).deliver 
+        ConversationMailer.new_message_email(user, @conversation).deliver_now
       end
     end
   end

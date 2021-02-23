@@ -13,4 +13,8 @@ class Conversation < ApplicationRecord
   def current_user_not_in?(user)
     !self.users.include?(user)
   end
+
+  def title
+    self.name.blank? ? self.id : self.name
+  end
 end

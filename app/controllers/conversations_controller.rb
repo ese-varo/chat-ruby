@@ -1,4 +1,5 @@
 class ConversationsController < ApplicationController
+  before_action :require_login
   before_action :conversation, only: %i!show edit update destroy join!
 
   def index
@@ -11,6 +12,7 @@ class ConversationsController < ApplicationController
 
   def show
     @user_names = user_names
+    @message = Message.new
   end
 
   def edit
@@ -31,7 +33,8 @@ class ConversationsController < ApplicationController
     @conversation = current_user.conversations.create
     @conversation.users << receiver
 
-    # ConversationMailerPreview.new_conversation_email_preview(receiver).deliver
+    # ConversationMailer.new_conversation_email(receiver).deliver_now
+    SendConversationsSummaryEmailJob.set(wait: 10.seconds).perform_later(current_user)
 
     render :edit
   end

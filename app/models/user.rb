@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_many :conversations, through: :participants, dependent: :destroy
 
   acts_as_authentic do |c|
-    c.crypto_provider = Authlogic::CryptoProviders::Sha512
+    c.crypto_provider = Authlogic::CryptoProviders::BCrypt
   end
 
   EMAIL = /

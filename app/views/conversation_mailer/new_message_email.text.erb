@@ -1,6 +1,11 @@
 Hi <%= @user.username %>
 ===============================================
 
-You have a new message
+You have a new message at conversation: 
+<% if @conversation.name.blank? %>
+  <%= @conversation.id %>
+<% else %>
+  <%= @conversation.name %>
+<% end %>
 
 Have a great day!

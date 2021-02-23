@@ -3,8 +3,7 @@ class MessagesController < ApplicationController
   before_action :conversation
 
   def create
-    @conversation.messages.create(new_message_params.merge({user_id: current_user.id}))
-
+    @conversation.messages.create(message_params)
     # send_new_message_notification_email
 
     redirect_to conversation_path(@conversation)
@@ -15,7 +14,6 @@ class MessagesController < ApplicationController
 
   def update
     @message.update(message_params)
-    # byebug
     @message.image.purge if params[:message][:remove_asset] == '1'
     redirect_to @conversation
   end
@@ -43,11 +41,7 @@ class MessagesController < ApplicationController
   end
 
   def message_params
-    params.require(:message).permit(:content, :conversation_id, :image)
-  end
-
-  def new_message_params
-    params.permit(:content, :conversation_id, :image)
+    params.require(:message).permit(:content, :conversation_id, :image, :user_id)
   end
 
   def message

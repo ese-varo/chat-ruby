@@ -1,7 +1,7 @@
 class MessagesController < ApplicationController
-  before_action :require_login, :conversation
-  before_action :message, except: :create
-  after_action  :notification, only: :create
+  before_action :require_login, :set_conversation
+  before_action :set_message, except: :create
+  after_action  :trigger_notification, only: :create
 
   def create
     @message = @conversation.messages.create(message_params)
@@ -32,7 +32,7 @@ class MessagesController < ApplicationController
 
   private
 
-  def notification
+  def trigger_notification
     send_new_message_notification_email
     unless @message.user_id == current_user.id
       conversation = Conversation.find(@message.conversation_id)
@@ -56,11 +56,11 @@ class MessagesController < ApplicationController
     params.require(:message).permit(:content, :conversation_id, :image, :user_id)
   end
 
-  def message
+  def set_message
     @message = Message.find(params[:id])
   end
 
-  def conversation
+  def set_conversation
     @conversation = Conversation.find(params[:conversation_id])
   end
 end

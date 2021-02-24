@@ -1,6 +1,6 @@
 class ConversationsController < ApplicationController
   before_action :require_login
-  before_action :conversation, only: %i!show edit update destroy join!
+  before_action :set_conversation, only: %i!show edit update destroy join!
 
   def index
     @conversations = Conversation.all
@@ -53,7 +53,7 @@ class ConversationsController < ApplicationController
     params.require(:conversation).permit(:receiver_id, :name, :status)
   end
 
-  def conversation
+  def set_conversation
     @conversation = Conversation.find(params[:id])
   end
 end

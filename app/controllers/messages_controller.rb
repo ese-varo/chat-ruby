@@ -1,12 +1,15 @@
 class MessagesController < ApplicationController
   before_action :require_login, :set_conversation
   before_action :set_message, except: :create
-  after_action  :trigger_notification, only: :create
+  # after_action  :trigger_notification, only: :create
 
   def create
     @message = @conversation.messages.create(message_params)
     @message.fill_emojis
-    redirect_to conversation_path(@conversation)
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def edit

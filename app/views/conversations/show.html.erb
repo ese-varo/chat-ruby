@@ -9,7 +9,9 @@
           <% @conversation.users.last(3).each do |user| %>
             <%= "#{user.username}, " unless user.id == current_user.id %>
           <% end %>) <span class="badge bg-info text-light">
-            <span class="badge rounded-pill bg-warning text-dark"><%= @conversation.messages.count %></span> messages
+            <span class="badge rounded-pill bg-warning text-dark", id="messages-counter">
+              <%= @conversation.messages.count %>
+            </span> messages
           </span>
         </span>
         <div class="col">
@@ -19,59 +21,31 @@
       <p class="text-light"><span class="badge bg-secondary"><%= @conversation.status %></span></p>
     </div>
     <div class="chat-box">
-      <section class="chat-box__content">
-        <% @conversation.messages.each do |message| %>
-          <div class="card mt-3 col-md-8 message">
-            <div class="card-body">
-              <p class="card-title messager"><%= @user_names[message.user_id] %></p>
-              <p class="col-8 card-text">
-              <% if message.removed? %>
-                <p class="text-muted removed">This message was removed</p>
-              <% else %>
-                <div class="row">
-                  <div class="col-sm">
-                    <%= message.content %>
-                  </div>
-                  <div class="col-sm">
-                    <div class="btn-group float-right" role="group">
-                      <%= link_to 'Update', edit_conversation_message_path(@conversation, message),
-                        class: 'btn btn-outline-primary btn-sm' %>
-                      <%= link_to 'Delete', [@conversation, message], method: :delete, class: 'btn btn-outline-danger btn-sm' %>
-                    </div>
-                  </div>
-                </div>
-              <% end %>
-              <% if message.image.attached? %>
-                <image src="<%=(url_for(message.image))%>" class="img-thumbnail mb-3 mt-3">
-              <% end %>
-              <div class="card-subtitle mb-2 text-muted">
-                <%= message.date %>
-              </div>
-              </p>
-            </div>
-          </div>
-        <% end %>
-      </section>
+    <section id="messages" class="chat-box__content">
+      <%= render @conversation %>
+    </section>
   </div>
 </div>
 
 </div>
 <section class="chat-box__input">
   <div class="mb-3 mt-3">
-    <%= form_with model: @message, url: conversation_messages_path(@conversation, @message) do |form| %>
+    <%= form_with model: @message, url: conversation_messages_path(@conversation, @message),
+      local: false do |form| %>
       <div class="card">
         <div class="card-body">
           <div class="input-group mb-3">
-            <%= form.text_field :content, class: 'form-control' %>
+            <%= form.text_field :content, class: 'form-control', id: 'message-input' %>
             <%= form.hidden_field :user_id, value: current_user.id %>
-            <%= form.submit 'Send', class: 'btn btn-info' %>
+            <%= form.submit 'Send', class: 'btn btn-info', id: 'message-send' %>
           </div>
           <div class="row g-2">
             <div class="col-auto">
               <%= form.label :image, 'Add Image: ', class: 'form-label' %>
             </div>
             <div class="col-auto">
-              <%= form.file_field :image, class: 'form-control form-control-sm' %>
+              <%= form.file_field :image, class: 'form-control form-control-sm',
+                                  id: 'message-image-picker' %>
             </div>
           </div>
         </div>

@@ -1,19 +1,9 @@
 <p>Who do you want to chat with?</p>
 <section>
   <ul class="list-group">
-    <% @users.each do |user| %>
-      <% unless user == current_user %>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-
-          <%= user.username %>
-          <span class="">
-            <%= form_with model: @conversation, url: conversations_url do |form| %>
-              <%= form.hidden_field :receiver_id, :value => user.id %>
-              <%= form.submit 'Chat', class: 'btn btn-primary btn-sm' %>
-            <% end %>
-          </span>
-        </li>
-      <% end %>
+    <%= form_with model: @conversation, url: conversations_url do |form| %>
+      <%= form.collection_check_boxes :user_ids, User.order(:username), :id, :username %>
+      <%= form.submit 'Chat', class: 'btn btn-primary btn-sm' %>
     <% end %>
   </ul>
   </br>

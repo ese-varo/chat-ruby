@@ -21,6 +21,10 @@ class Message < ApplicationRecord
     self.created_at.strftime "%a %b-%d %H:%M"
   end
 
+  def username
+    self.user.username
+  end
+
   def fill_emojis
     self.content = find_emojis
     self.save

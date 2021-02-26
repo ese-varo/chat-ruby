@@ -1,0 +1,18 @@
+<div class="card message">
+  <%= form_with model: conversation do |form| %>
+    <div class="card-body">
+      <div class="card-text">
+        <%= form.label :name, 'Conversation title:', class: 'form-label' %>
+        <%= form.text_field :name, class: 'form-control' %>
+        <%= form.label :status_public, "Public" %>
+        <%= form.radio_button :status, "public" %>
+        <%= form.label :status_private, "Private" %>
+        <%= form.radio_button :status, "private" %>
+        <%# <%= form.collection_check_boxes :user_ids, conversation.users.order(:username), %>
+        <%#                                 :id, :username %1> %>
+        <%= form.collection_check_boxes :user_ids, User.order(:username), :id, :username %>
+      </div>
+      <%= form.submit 'Save', class: 'btn btn-warning mt-4' %>
+    </div>
+  <% end %>
+</div>

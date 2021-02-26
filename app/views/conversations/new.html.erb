@@ -1,11 +1,3 @@
 <p>Who do you want to chat with?</p>
-<section>
-  <ul class="list-group">
-    <%= form_with model: @conversation, url: conversations_url do |form| %>
-      <%= form.collection_check_boxes :user_ids, User.order(:username), :id, :username %>
-      <%= form.submit 'Chat', class: 'btn btn-primary btn-sm' %>
-    <% end %>
-  </ul>
-  </br>
-  <%= link_to 'Home page', root_path, class: 'btn btn-sm btn-outline-secondary' %>
-</section>
+
+<%= render 'form', conversation: @conversation %>

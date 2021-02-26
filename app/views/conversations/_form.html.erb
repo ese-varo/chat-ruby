@@ -8,9 +8,8 @@
         <%= form.radio_button :status, "public" %>
         <%= form.label :status_private, "Private" %>
         <%= form.radio_button :status, "private" %>
-        <%# <%= form.collection_check_boxes :user_ids, conversation.users.order(:username), %>
-        <%#                                 :id, :username %1> %>
-        <%= form.collection_check_boxes :user_ids, User.order(:username), :id, :username %>
+        <%= form.collection_check_boxes :user_ids, User.where(["id != ?", 9]).order(:username),
+                                        :id, :username %>
       </div>
       <%= form.submit 'Save', class: 'btn btn-warning mt-4' %>
     </div>

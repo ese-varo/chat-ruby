@@ -1,7 +1,7 @@
 class MessagesController < ApplicationController
   before_action :require_login, :set_conversation
   before_action :set_message, except: :create
-  # after_action  :trigger_notification, only: :create
+  # after_action  :trigger_notifications, only: :create
 
   def create
     @message = @conversation.messages.create(message_params)
@@ -28,19 +28,14 @@ class MessagesController < ApplicationController
     redirect_to @conversation
   end
 
-  def remove_asset
-    @message.image.purge
-    redirect_to edit_conversation_message_path @message
-  end
-
   private
 
-  def trigger_notification
+  def trigger_notifications
     send_new_message_notification_email
-    unless @message.user_id == current_user.id
-      conversation = Conversation.find(@message.conversation_id)
-      send_notification if current_user.conversations.include?(conversation)
-    end
+
+    return unless @message.user_id == current_user.id
+    conversation = Conversation.find(@message.conversation_id)
+    send_notification unless current_user.conversations.include?(conversation)
   end
 
   def send_notification
@@ -49,9 +44,8 @@ class MessagesController < ApplicationController
 
   def send_new_message_notification_email
     @conversation.users.each do |user|
-      unless user == current_user
-        ConversationMailer.new_message_email(user, @conversation).deliver_now
-      end
+      next if user == current_user
+      ConversationMailer.new_message_email(user, @conversation).deliver_now
     end
   end
 

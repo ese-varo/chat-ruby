@@ -39,8 +39,8 @@
       </div>
       <div class="card-text">
         <ul class="list-group">
-          <% @conversations.each do |conversation| %>
-            <% if conversation.public? && conversation.current_user_not_in?(current_user) %>
+          <% @conversations.only_public.each do |conversation| %>
+            <% if conversation.current_user_not_in?(current_user) %>
               <li class="list-group-item d-flex justify-content-between align-items-center conversation">
                 <p><%= conversation.title %></p>
                 <div class="btn-group float-right" role="group">

@@ -4,40 +4,34 @@ class Message < ApplicationRecord
   belongs_to :user
   belongs_to :conversation
 
+  delegate :username, to: :user
   has_one_attached :image
 
   INDEX = Emoji::Index.new.freeze
 
   def remove
     self.removed = true
+    # image.purge
     self.content = ''
   end
 
   def removed?
-    self.removed
+    removed
   end
 
   def date
-    self.created_at.strftime "%a %b-%d %H:%M"
-  end
-
-  def username
-    self.user.username
+    created_at.strftime "%a %b-%d %H:%M"
   end
 
   def fill_emojis
     self.content = find_emojis
-    self.save
+    save
   end
 
   def find_emojis
-    self.content.split.reduce('') do |res, elem|
-      if elem.match(/[:][a-z|_]+[:]/)
-        moji = INDEX.find_by_name(elem[1..-2])
-        moji ? res += "#{moji['moji']} " : res += "#{elem} "
-      else
-        res += "#{elem} "
-      end
+    content.split.reduce('') do |res, elem|
+      moji = INDEX.find_by_name(elem[1..-2])
+      res += moji ? "#{moji['moji']} " : "#{elem} "
     end
   end
 end

@@ -3,7 +3,7 @@ class User < ApplicationRecord
   has_many :participants
   has_many :conversations, through: :participants, dependent: :destroy
 
-  scope :ordered,     -> { order('username') }
+  scope :ordered, -> { order('username') }
 
   acts_as_authentic do |c|
     c.crypto_provider = Authlogic::CryptoProviders::BCrypt

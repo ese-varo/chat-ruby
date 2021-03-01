@@ -7,13 +7,10 @@ class Conversation < ApplicationRecord
   validates :status, presence: true, inclusion: { in: VALID_STATUS }
 
   scope :only_public, -> { where(status: 'public') }
+  scope :exclude, ->(ids) { where.not(id: ids) }
 
   def public?
     status == 'public'
-  end
-
-  def current_user_not_in?(user)
-    !users.include?(user)
   end
 
   def title

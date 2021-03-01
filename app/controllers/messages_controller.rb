@@ -22,9 +22,11 @@ class MessagesController < ApplicationController
   end
 
   def destroy
-    @message.remove
-    @message.image.purge
-    @message.save
+    if MessageDestroyer.call(@message).success?
+      flash[:success] = 'Message was succesfully deleted'
+    else
+      flash[:success] = 'There was a problem deleting the message'
+    end
     redirect_to @conversation
   end
 

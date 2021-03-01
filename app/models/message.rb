@@ -9,11 +9,10 @@ class Message < ApplicationRecord
 
   INDEX = Emoji::Index.new.freeze
 
-  def remove
-    self.removed = true
-    # image.purge
-    self.content = ''
-  end
+  # def remove
+  #   self.removed = true
+  #   self.content = ''
+  # end
 
   def removed?
     removed

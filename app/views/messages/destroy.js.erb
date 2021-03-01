@@ -1,0 +1,5 @@
+alerts = document.getElementById('alerts')
+
+messageRemoved = "<%= @message.removed? %>"
+alerts.textContent = messageRemoved == 'true' ? 'Message was succesfully deleted'
+                    : 'There was a problem deleting the message'

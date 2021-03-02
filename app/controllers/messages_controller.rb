@@ -5,7 +5,7 @@ class MessagesController < ApplicationController
 
   def create
     @message = @conversation.messages.create(message_params)
-    @message.fill_emojis
+    EmojiFiller.call(@message)
     respond_to do |format|
       format.html
       format.js

@@ -6,7 +6,7 @@ class Conversation < ApplicationRecord
   VALID_STATUS = ['public', 'private']
   validates :status, presence: true, inclusion: { in: VALID_STATUS }
 
-  scope :only_public, -> { where(status: 'public') }
+  # scope :only_public, -> { where(status: 'public') }
   scope :exclude, ->(ids) { where.not(id: ids) }
 
   def public?

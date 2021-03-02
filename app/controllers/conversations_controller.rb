@@ -4,7 +4,7 @@ class ConversationsController < ApplicationController
   after_action  :add_users_to_conversation, only: [:create, :update]
 
   def index
-    @public_conversations_to_join = Conversation.only_public.exclude(current_user.conversations.ids)
+    @public_conversations_to_join = PublicConversationsQuery.call.exclude(current_user.conversations.ids)
   end
 
   def new

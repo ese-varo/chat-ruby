@@ -33,8 +33,6 @@ class MessagesController < ApplicationController
   private
 
   def trigger_notifications
-    send_new_message_notification_email
-
     return unless @message.user_id == current_user.id
     conversation = Conversation.find(@message.conversation_id)
     send_notification unless current_user.conversations.include?(conversation)
@@ -42,13 +40,6 @@ class MessagesController < ApplicationController
 
   def send_notification
     flash[:success] = "You have a new message at conversation: #{@conversation.title}"
-  end
-
-  def send_new_message_notification_email
-    @conversation.users.each do |user|
-      next if user == current_user
-      ConversationMailer.new_message_email(user, @conversation).deliver_now
-    end
   end
 
   def message_params

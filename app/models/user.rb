@@ -9,26 +9,10 @@ class User < ApplicationRecord
     c.crypto_provider = Authlogic::CryptoProviders::BCrypt
   end
 
-  EMAIL = /
-    \A
-    [A-Z0-9_.&%+\-']+   # mailbox
-    @
-    (?:[A-Z0-9\-]+\.)+  # subdomains
-    (?:[A-Z]{2,25})     # TLD
-    \z
-  /ix
   USERNAME = /\A[a-zA-Z0-9_][a-zA-Z0-9\.+\-_@ ]+\z/
 
-  validates :email,
-    format: {
-      with: EMAIL,
-      message: "should look like an email address."
-    },
-    length: { maximum: 100 },
-    uniqueness: {
-      case_sensitive: false,
-      if: :will_save_change_to_email?
-    }
+  validates :email, email: true
+  validates_uniqueness_of :email, message: 'is already taken'
 
   validates :username,
     format: {

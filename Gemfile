@@ -61,3 +61,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'authlogic'
 gem 'emoji'
 gem 'rexml'
+gem 'rails-observers'

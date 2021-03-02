@@ -12,12 +12,4 @@ class Conversation < ApplicationRecord
   def public?
     status == 'public'
   end
-
-  def title
-    name.blank? ? id : name
-  end
-
-  def number_of_messages
-    messages.count
-  end
 end

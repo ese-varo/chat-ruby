@@ -1,16 +1,15 @@
+<% presenter = ConversationPresenter.new(@conversation) %>
 <div class="card">
   <div class="card-body">
     <div class="card-title">
       <div class="row">
         <h3 class="col">
-          <%= @conversation.title %> 
+          <%= presenter.title %> 
         </h3>
-        <span class="text-muted">(with: 
-          <% @conversation.users.last(3).each do |user| %>
-            <%= "#{user.username}, " unless user.id == current_user.id %>
-          <% end %>) <span class="badge bg-info text-light">
+        <span class="text-muted">(with: <%= presenter.participants_list(current_user.username) %>) 
+          <span class="badge bg-info text-light">
             <span class="badge rounded-pill bg-warning text-dark", id="messages-counter">
-              <%= @conversation.number_of_messages %>
+              <%= presenter.number_of_messages %>
             </span> messages
           </span>
         </span>
@@ -18,13 +17,13 @@
           <%= link_to 'Edit', edit_conversation_path, class: 'btn btn-secondary float-right' %>
         </div>
       </div>
-      <p class="text-light"><span class="badge bg-secondary"><%= @conversation.status %></span></p>
+      <p class="text-light"><span class="badge bg-secondary"><%= presenter.status %></span></p>
     </div>
     <div class="chat-box">
-    <section id="messages" class="chat-box__content">
-      <%= render @conversation %>
-    </section>
-  </div>
+      <section id="messages" class="chat-box__content">
+        <%= render @conversation %>
+      </section>
+    </div>
 </div>
 
 </div>

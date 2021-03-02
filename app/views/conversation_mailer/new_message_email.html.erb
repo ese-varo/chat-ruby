@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<% presenter = ConversationPresenter.new(@conversation) %>
 <html>
   <head>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
@@ -6,7 +7,7 @@
   <body>
     <h1>Hi <%= @user.username %></h1>
     <p>
-      You have a new message at conversation: <%= @conversation.title %>
+      You have a new message at conversation: <%= presenter.title %>
     </p>
   </body>
 </html>

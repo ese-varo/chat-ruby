@@ -1,0 +1,29 @@
+<nav class="navbar sticky-top navbar-light bg-light">
+  <div class="container-fluid">
+    <%= link_to 'Ruby-Chat', root_path, class: 'navbar-brand' %>
+    <div id="navbar">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+              aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="#">Home</a>
+        <a class="nav-link" href="#">Features</a>
+        <a class="nav-link" href="#">Pricing</a>
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+      </div>
+    </div>
+      <%# <ul class="nav navbar-nav pull-right"> %>
+      <%#   <% if current_user %1> %>
+      <%#     <li class="nav-item"><span class="navbar-text"><%= current_user.email %1></span></li> %>
+      <%#     <li class="nav-item"><%= link_to 'Sign Out', sign_out_path, method: :delete, %>
+      <%#                              class: 'nav-link' %1></li> %>
+      <%# </ul> %>
+    <% else %>
+      <span class="nav-item"><%= link_to 'Sign In', sign_in_path, class: 'nav-link' %></span>
+    <% end %>
+    </div>
+  </div>
+</nav>

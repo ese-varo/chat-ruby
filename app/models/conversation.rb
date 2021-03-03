@@ -12,4 +12,8 @@ class Conversation < ApplicationRecord
   def public?
     status == 'public'
   end
+
+  def title
+    name.blank? ? id : name
+  end
 end

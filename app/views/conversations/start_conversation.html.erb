@@ -1,0 +1,19 @@
+start conversation
+<ul>
+  <% @users.each do |user| %>
+    <li>
+      <%= user.username %> 
+      <%= user.shared_conversation_ids(current_user).count %>
+
+      <%# <% form_with url: conversations_path( 'HERE I NEED DE ID OF BELOW SELECTED CONVERSATION' ) do |form| %1> %>
+      <% form_with model: Conversation.last do |form| %>
+        <%# <%= form.collection_select :conversation_id, user.shared_conversations_with(current_user), :id, :name %1> %>
+        <%= form.collection_select :conversation_id, Conversation.last.messages, :id, :content %>
+        <%= form.submit 'see chat' %>
+      <% end %>
+
+      <%# <%= collection_select :conversation, :id, user.shared_conversations_with(current_user), :id, :name %1> %>
+      <%# <%= link_to 'see chat', conversation_path(:conversation_id) %1> %>
+    </li>
+  <% end %>
+</ul>

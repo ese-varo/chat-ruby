@@ -1,8 +1,4 @@
 class UsersController < ApplicationController
-  def start_conversation
-    @users = User.all
-  end
-
   def new
     @user = User.new
   end

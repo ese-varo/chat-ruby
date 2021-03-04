@@ -10,4 +10,6 @@ Rails.application.routes.draw do
   get '/sign_in', to: 'user_sessions#new', as: :sign_in
   get '/start_conversation', to: 'conversations#start_conversation'
   get '/join_conversation', to: 'conversations#join'
+  get '/shared_conversation', to: 'conversations#shared_conversation'
+  get '/profile/:id', to: 'conversations#profile', as: 'profile'
 end

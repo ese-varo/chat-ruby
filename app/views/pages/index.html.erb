@@ -4,9 +4,17 @@
     <p>
       <% unless current_user %>
         <p>Sign up to get started.</p>
-        <%= link_to new_user_path, class: 'btn btn-primary btn-lg' do %>
+        <%= link_to new_user_path, class: 'btn btn-primary btn-lg mb-3' do %>
           Sign Up &raquo;
         <% end %>
+        <div class="card container-fluid">
+          <div class="card-body">
+            <div class="card-title">
+              <h3>Most Active Public Conversations</h3>
+            </div>
+            <%= render 'shared/public_conversations', conversations: @public_conversations %>
+          </div>
+        </div>
       <% end %>
     </p>
   </div>

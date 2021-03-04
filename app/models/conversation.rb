@@ -1,13 +1,24 @@
 class Conversation < ApplicationRecord
+  include ActiveModel::Validations
   has_many :messages, dependent: :destroy
   has_many :participants, dependent: :destroy
   has_many :users, through: :participants
 
   VALID_STATUS = ['public', 'private']
-  validates :status, presence: true, inclusion: { in: VALID_STATUS }
+  validates :status, inclusion: { in: VALID_STATUS }
+  validates :name, :description, :status, presence: true
 
-  # scope :only_public, -> { where(status: 'public') }
+  validates :emoji, emoji: true # Create Validator
+
   scope :exclude, ->(ids) { where.not(id: ids) }
+
+  def content
+    emoji
+  end
+
+  def content=(value)
+    self.emoji = value
+  end
 
   def public?
     status == 'public'

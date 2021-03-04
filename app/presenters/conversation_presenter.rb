@@ -23,6 +23,14 @@ class ConversationPresenter
     @conversation.status
   end
 
+  def description
+    @conversation.description
+  end
+
+  def emoji
+    @conversation.emoji
+  end
+
   def participants_list(username)
     list = @conversation.users.sample(3).collect do |user|
       username == user.username ? 'you' : user.username

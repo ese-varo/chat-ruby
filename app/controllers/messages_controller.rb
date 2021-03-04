@@ -1,11 +1,11 @@
 class MessagesController < ApplicationController
   before_action :require_login, :set_conversation
   before_action :set_message, except: :create
+  after_action  :find_emojis, only: [:create, :update]
   # after_action  :trigger_notifications, only: :create
 
   def create
     @message = @conversation.messages.create(message_params)
-    EmojiFiller.call(@message)
     respond_to do |format|
       format.html
       format.js
@@ -31,6 +31,9 @@ class MessagesController < ApplicationController
   end
 
   private
+  def find_emojis
+    EmojiFiller.call(@message)
+  end
 
   def trigger_notifications
     return unless @message.user_id == current_user.id

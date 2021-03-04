@@ -1,19 +1,38 @@
-start conversation
-<ul>
-  <% @users.each do |user| %>
-    <li>
-      <%= user.username %> 
-      <%= user.shared_conversation_ids(current_user).count %>
-
-      <%# <% form_with url: conversations_path( 'HERE I NEED DE ID OF BELOW SELECTED CONVERSATION' ) do |form| %1> %>
-      <% form_with model: Conversation.last do |form| %>
-        <%# <%= form.collection_select :conversation_id, user.shared_conversations_with(current_user), :id, :name %1> %>
-        <%= form.collection_select :conversation_id, Conversation.last.messages, :id, :content %>
-        <%= form.submit 'see chat' %>
-      <% end %>
-
-      <%# <%= collection_select :conversation, :id, user.shared_conversations_with(current_user), :id, :name %1> %>
-      <%# <%= link_to 'see chat', conversation_path(:conversation_id) %1> %>
-    </li>
-  <% end %>
-</ul>
+<div class="card message">
+  <div class="card-body">
+    <h3 class="title">Chat with others</h3>
+    <div class="card-text">
+      <ul class="list-group">
+        <% @users.each do |user| %>
+          <li class="list-group-item d-flex justify-content-between align-items-center conversation">
+            <div class="form-group">
+              <p>
+                <%= user.username %>
+                <span class="badge bg-info text-light"> conversations
+                  <span class="badge rounded-pill bg-warning text-dark", id="messages-counter">
+                    <%= user.number_of_conversations_with(current_user)%>
+                  </span>
+                </span>
+              </p>
+              <% if user.number_of_conversations_with(current_user) > 0 %>
+                <%= form_with url: shared_conversation_path, method: :get do |f| %>
+                  <%= f.collection_select :conversation_id,
+                    user.shared_conversations_with(current_user), :id, :name %>
+                  <%= f.submit 'See chat', class: 'btn btn-primary btn-sm mt-3' %>
+                <% end %>
+              <% else %>
+                <%= form_with url: new_conversation_path, method: :get do |f| %>
+                  <%= f.hidden_field :user_ids, value: "#{user.id}" %>
+                  <%= f.submit 'Create new chat', class: 'btn btn-primary btn-sm' %>
+                <% end %>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+</br>
+<%= link_to 'Home page', root_path, class: 'btn btn-sm btn-outline-secondary mb-5' %>
+<%= javascript_pack_tag 'start_conversation' %>

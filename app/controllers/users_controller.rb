@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   def new
     @user = User.new
+    # get '*path', to: redirect('/')
   end
 
   def edit

@@ -4,7 +4,7 @@
     <div class="card-title">
       <div class="row">
         <h3 class="col">
-          <%= presenter.title %> 
+          <%= presenter.title %> <%= presenter.emoji %>
         </h3>
         <span class="text-muted">(with: <%= presenter.participants_list(current_user.username) %>) 
           <span class="badge bg-info text-light">
@@ -15,6 +15,7 @@
         </span>
         <div class="col">
           <%= link_to 'Edit', edit_conversation_path, class: 'btn btn-secondary float-right' %>
+          <%= link_to 'Profile', profile_path, class: 'btn btn-secondary float-right mr-3' %>
         </div>
       </div>
       <p class="text-light"><span class="badge bg-secondary"><%= presenter.status %></span></p>
@@ -54,3 +55,4 @@
 </section>
 </br>
 <%= link_to 'Home page', root_path, class: 'btn btn-sm btn-outline-secondary mb-5' %>
+<%= javascript_pack_tag 'conversation_show' %>

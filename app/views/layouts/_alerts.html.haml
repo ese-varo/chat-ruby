@@ -1,0 +1,5 @@
+- flash.each do |name, msg|
+  - if name == 'success'
+    = content_tag :div, msg, class: "alert alert-primary"
+  - else
+    = content_tag :div, msg, class: "alert alert-warning"

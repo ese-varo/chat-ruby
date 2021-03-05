@@ -1,0 +1,14 @@
+%nav.navbar.navbar-expand-lg.navbar-light.bg-light
+  .container-fluid
+    = link_to 'RubyChat', root_path, class: 'navbar-brand'
+    .navbar-nav
+      = link_to 'Home', root_path, class: 'nav-link'
+      = link_to 'Meet others', start_conversation_path, class: 'nav-link'
+    .navbar-nav.d-flex
+      - if current_user
+        %span.nav-item
+          %span.navbar-text= current_user.email
+        %span.nav-item
+          = link_to 'Sign Out', sign_out_path, method: :delete, class: 'nav-link'
+      - else
+        %span.nav-item= link_to 'Sign In', sign_in_path, class: 'nav-link'

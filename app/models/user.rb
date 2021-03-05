@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  class NotAuthorized < StandardError
+  end
+
   include ActiveModel::Validations
   has_many :messages, dependent: :destroy
   has_many :participants

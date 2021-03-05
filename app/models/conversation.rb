@@ -1,4 +1,7 @@
 class Conversation < ApplicationRecord
+  class DefaultEmoji < StandardError
+  end
+
   include ActiveModel::Validations
   has_many :messages, dependent: :destroy
   has_many :participants, dependent: :destroy
@@ -8,7 +11,7 @@ class Conversation < ApplicationRecord
   validates :status, inclusion: { in: VALID_STATUS }
   validates :name, :description, :status, presence: true
 
-  validates :emoji, emoji: true # Create Validator
+  validates :emoji, emoji: true
 
   scope :exclude, ->(ids) { where.not(id: ids) }
 

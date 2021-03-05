@@ -7,10 +7,10 @@ class EmojiSetter < ApplicationService
   def call
     set_emoji
     EmojiFiller.call(@text)
-    # handle errors (missing emojis)
     return unless @text.content =~ EMOJI_TEXT
     @text.content = ':heart:'
     EmojiFiller.call(@text)
+    raise Conversation::DefaultEmoji
   end
 
   def set_emoji

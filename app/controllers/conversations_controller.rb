@@ -1,12 +1,13 @@
 class ConversationsController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound, with: :show_errors
+  rescue_from Conversation::DefaultEmoji, with: :default_emoji
   before_action :require_login, except: :profile
   before_action :set_conversation, only: %i!show edit update destroy join profile!
   after_action  :add_users_to_conversation, only: [:create, :update]
   after_action  :set_emoji, only: [:create, :update]
 
   def profile
-    redirect_to root_path, alert: "You aren't allowed to see this conversation 💔" unless 
-      ConversationGuard.call(@conversation, current_user).success?
+    raise User::NotAuthorized unless ConversationGuard.call(@conversation, current_user).success?
   end
 
   def shared_conversation
@@ -54,8 +55,6 @@ class ConversationsController < ApplicationController
 
   def create
     @conversation = current_user.conversations.create(conversation_params)
-    # ConversationMailer.new_conversation_email(receiver).deliver_now
-    # SendConversationsSummaryEmailJob.set(wait: 10.seconds).perform_later(current_user)
     if @conversation.save
       redirect_to @conversation
     else
@@ -71,6 +70,15 @@ class ConversationsController < ApplicationController
   end
 
   private
+  def default_emoji
+    flash[:error] = "You provided an invalid emoji! A default one (❤) has been setted"
+  end
+
+  def show_errors
+    flash[:error] = "Invalid conversation!"
+    redirect_back(fallback_location: root_path)
+  end
+
   def set_emoji
     EmojiSetter.call(@conversation)
   end

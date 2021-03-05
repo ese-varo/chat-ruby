@@ -1,4 +1,5 @@
 class MessagesController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound, with: :show_errors
   before_action :require_login, :set_conversation
   before_action :set_message, except: :create
   after_action  :find_emojis, only: [:create, :update]
@@ -31,6 +32,12 @@ class MessagesController < ApplicationController
   end
 
   private
+
+  def show_errors
+    flash[:error] = "Invalid message!"
+    redirect_back(fallback_location: root_path)
+  end
+
   def find_emojis
     EmojiFiller.call(@message)
   end

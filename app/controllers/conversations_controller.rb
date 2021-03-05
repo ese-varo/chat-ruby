@@ -5,7 +5,7 @@ class ConversationsController < ApplicationController
   after_action  :set_emoji, only: [:create, :update]
 
   def profile
-    redirect_to root_path, notice: "You aren't allowed to see this conversation 💔" unless 
+    redirect_to root_path, alert: "You aren't allowed to see this conversation 💔" unless 
       ConversationGuard.call(@conversation, current_user).success?
   end
 

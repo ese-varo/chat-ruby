@@ -13,8 +13,9 @@ class ConversationsQuery
     relation.ordered_by_name
   end
 
-  def public_more_active
-    only_public.ordered_by_activity
+  def public_more_active(num = 5)
+    time_range = (Time.now.midnight - 1.month)..Time.now
+    only_public.ordered_by_activity(time_range).limit(num)
   end
 
   module Scopes
@@ -22,8 +23,9 @@ class ConversationsQuery
       order(:name)
     end
 
-    def ordered_by_activity
+    def ordered_by_activity(time_range)
       includes(:messages)
+        .where(messages: { created_at: time_range })
         .order('messages.updated_at DESC')
     end
   end

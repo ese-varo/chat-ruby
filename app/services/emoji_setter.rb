@@ -1,0 +1,20 @@
+class EmojiSetter < ApplicationService
+  EMOJI_TEXT = /[:][a-z|_]+[:]/
+  def initialize(text)
+    @text = text
+  end
+
+  def call
+    set_emoji
+    EmojiFiller.call(@text)
+    # handle errors (missing emojis)
+    return unless @text.content =~ EMOJI_TEXT
+    @text.content = ':heart:'
+    EmojiFiller.call(@text)
+  end
+
+  def set_emoji
+    index = @text.content =~ EMOJI_TEXT
+    @text.content = @text.content[index..-1].split[0]
+  end
+end

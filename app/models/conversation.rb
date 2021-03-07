@@ -14,6 +14,7 @@ class Conversation < ApplicationRecord
   validates :emoji, emoji: true
 
   scope :exclude, ->(ids) { where.not(id: ids) }
+  scope :top,       lambda { |l| limit(l) }
 
   def content
     emoji
@@ -25,9 +26,5 @@ class Conversation < ApplicationRecord
 
   def public?
     status == 'public'
-  end
-
-  def title
-    name.blank? ? id : name
   end
 end

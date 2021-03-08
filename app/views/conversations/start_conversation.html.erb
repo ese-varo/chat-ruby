@@ -10,11 +10,11 @@
                 <%= user.username %>
                 <span class="badge bg-info text-light"> conversations
                   <span class="badge rounded-pill bg-warning text-dark", id="messages-counter">
-                    <%= user.number_of_conversations_with(current_user)%>
+                    <%= user.shared_conversations_with(current_user).count %>
                   </span>
                 </span>
               </p>
-              <% if user.number_of_conversations_with(current_user) > 0 %>
+              <% if user.shared_conversations_with(current_user).any? %>
                 <%= form_with url: shared_conversation_path, method: :get do |f| %>
                   <%= f.collection_select :conversation_id,
                     user.shared_conversations_with(current_user), :id, :name %>

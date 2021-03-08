@@ -41,16 +41,6 @@ class User < ApplicationRecord
   }
 
   def shared_conversations_with(participant)
-    conversations.where(id: shared_conversation_ids(participant)).compact
-  end
-
-  def number_of_conversations_with(participant)
-    shared_conversation_ids(participant).count
-  end
-
-  def shared_conversation_ids(participant)
-    conversations.ids.collect do |id|
-      id if participant.conversations.ids.include?(id)
-    end.compact
+    conversations.joins(:users).where("users.id = ?", participant.id).references(:users)
   end
 end

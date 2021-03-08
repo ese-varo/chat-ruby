@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   def new
     @user = User.new
-    # get '*path', to: redirect('/')
   end
 
   def edit
@@ -12,7 +11,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       flash[:success] = "Account registered!"
-      # SendConversationsSummaryEmailJob.set(wait: 24.hours).perform_later(current_user)
+      SendConversationsSummaryEmailJob.set(wait: 24.hours).perform_later(current_user)
       redirect_to conversations_path
     else
       render :new

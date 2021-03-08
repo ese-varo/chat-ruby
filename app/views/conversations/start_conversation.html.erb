@@ -1,0 +1,38 @@
+<div class="card message">
+  <div class="card-body">
+    <h3 class="title">Chat with others</h3>
+    <div class="card-text">
+      <ul class="list-group">
+        <% @users.each do |user| %>
+          <li class="list-group-item d-flex justify-content-between align-items-center conversation">
+            <div class="form-group">
+              <p>
+                <%= user.username %>
+                <span class="badge bg-info text-light"> conversations
+                  <span class="badge rounded-pill bg-warning text-dark", id="messages-counter">
+                    <%= user.shared_conversations_with(current_user).count %>
+                  </span>
+                </span>
+              </p>
+              <% if user.shared_conversations_with(current_user).any? %>
+                <%= form_with url: shared_conversation_path, method: :get do |f| %>
+                  <%= f.collection_select :conversation_id,
+                    user.shared_conversations_with(current_user), :id, :name %>
+                  <%= f.submit 'See chat', class: 'btn btn-primary btn-sm mt-3' %>
+                <% end %>
+              <% else %>
+                <%= form_with url: new_conversation_path, method: :get do |f| %>
+                  <%= f.hidden_field :user_ids, value: "#{user.id}" %>
+                  <%= f.submit 'Create new chat', class: 'btn btn-primary btn-sm' %>
+                <% end %>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+</br>
+<%= link_to 'Home page', root_path, class: 'btn btn-sm btn-outline-secondary mb-5' %>
+<%= javascript_pack_tag 'start_conversation' %>

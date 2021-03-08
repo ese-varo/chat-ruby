@@ -1,10 +1,13 @@
 class User < ApplicationRecord
+  class NotAuthorized < StandardError
+  end
+
+  include ActiveModel::Validations
   has_many :messages, dependent: :destroy
   has_many :participants
   has_many :conversations, through: :participants, dependent: :destroy
 
   scope :ordered, -> { order('username') }
-
   acts_as_authentic do |c|
     c.crypto_provider = Authlogic::CryptoProviders::BCrypt
   end
@@ -36,4 +39,8 @@ class User < ApplicationRecord
       minimum: 8,
       if: :require_password?
   }
+
+  def shared_conversations_with(participant)
+    conversations.joins(:users).where("users.id = ?", participant.id).references(:users)
+  end
 end

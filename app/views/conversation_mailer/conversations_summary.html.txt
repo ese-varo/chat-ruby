@@ -1,0 +1,9 @@
+<h1>Hi <%= @user.username %></h1>
+<p>
+  This is the summary of the day:
+</p>
+<p>
+  New conversations: <%= @summary[:conversations] %></br>
+  New messages: <%= @summary[:messages] %>
+</p>
+<p>Enjoy your day!</p>

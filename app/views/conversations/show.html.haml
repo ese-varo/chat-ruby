@@ -1,0 +1,40 @@
+- presenter = ConversationPresenter.new(@conversation)
+.card
+  .card-body
+    .card-title
+      .row
+        %h3.col= "#{presenter.title} #{presenter.emoji}"
+        %span.text-muted
+          = "(with: #{presenter.participants_list(current_user.username)}) "
+          %span.badge.bg-info.text-light
+            %span.badge.rounded-pill.bg-warning.text-dark#messages-counter
+              = presenter.number_of_messages
+            messages
+        .col
+          = link_to 'Edit', edit_conversation_path, class: 'btn btn-secondary float-right'
+          = link_to 'Profile', profile_path, class: 'btn btn-secondary float-right mr-3'
+      %p.text-light
+        %span.badge.bg-secondary= presenter.status
+    .chat-box
+      %section#messages.chat-box__content
+        = render @conversation
+
+%section.chat-box__input
+  .mb-3.mt-3
+    = form_with model: @message, url: conversation_messages_path(@conversation, @message),
+      local: false do |form|
+      .card
+        .card-body
+          .input-group.mb-3
+            = form.text_field :content, class: 'form-control', id: 'message-input'
+            = form.hidden_field :user_id, value: current_user.id
+            = form.submit 'Send', class: 'btn btn-info', id: 'message-send'
+          .row.g-2
+            .col-auto
+              = form.label :image, 'Add Image: ', class: 'form-label'
+            .col-auto
+              = form.file_field :image, class: 'form-control form-control-sm',
+                                  id: 'message-image-picker'
+%br/
+= link_to 'Home page', root_path, class: 'btn btn-sm btn-outline-secondary mb-5'
+= javascript_pack_tag 'conversation_show'

@@ -1,0 +1,19 @@
+<div class="card-text">
+  <ul class="list-group">
+    <% conversations.each do |conversation| %>
+      <% presenter = ConversationPresenter.new(conversation) %>
+      <li class="list-group-item d-flex justify-content-between align-items-center conversation">
+        <h4><%= presenter.title %> <%= presenter.emoji %></h4>
+        <div class="btn-group float-right" role="group">
+          <% if current_user %>
+            <%= link_to 'Join', controller: 'conversations', action: 'join',
+              id: conversation, class: 'btn btn-info btn-sm' %>
+          <% else %>
+            <%= link_to 'Profile', class: 'btn btn-info btn-sm', controller: 'conversations', action: 'profile',
+              id: conversation %>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>

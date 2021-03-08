@@ -1,15 +1,28 @@
 <div class="card message">
   <%= form_with model: conversation do |form| %>
     <div class="card-body">
+      <%= render 'shared/errors', object: conversation %>
       <div class="card-text">
-        <%= form.label :name, 'Conversation title:', class: 'form-label' %>
-        <%= form.text_field :name, class: 'form-control' %>
-        <%= form.label :status_public, "Public" %>
-        <%= form.radio_button :status, "public" %>
-        <%= form.label :status_private, "Private" %>
-        <%= form.radio_button :status, "private" %>
-        <%= form.collection_check_boxes :user_ids, User.ordered.where(["id != ?", current_user.id]),
-                                        :id, :username %>
+        <div class="form-group">
+          <%= form.label :name, 'Title:', class: 'form-label' %>
+          <%= form.text_field :name, placeholder: 'Title', class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= form.label :description, 'Description: ', class: 'form-label' %>
+          <%= form.text_field :description, placeholder: 'Description', class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= form.label :emoji, 'Emoji: ', class: 'form-label' %>
+          <%= form.text_field :emoji, placeholder: ':heart:', class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= form.label :status_public, "Public" %>
+          <%= form.radio_button :status, "public" %>
+          <%= form.label :status_private, "Private" %>
+          <%= form.radio_button :status, "private" %>
+          <%= form.collection_check_boxes :user_ids, User.ordered.where(["id != ?", current_user.id]),
+            :id, :username %>
+        </div>
       </div>
       <%= form.submit 'Save', class: 'btn btn-warning mt-4' %>
     </div>

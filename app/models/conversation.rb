@@ -1,13 +1,28 @@
 class Conversation < ApplicationRecord
+  class DefaultEmoji < StandardError
+  end
+
+  include ActiveModel::Validations
   has_many :messages, dependent: :destroy
   has_many :participants, dependent: :destroy
   has_many :users, through: :participants
 
   VALID_STATUS = ['public', 'private']
-  validates :status, presence: true, inclusion: { in: VALID_STATUS }
+  validates :status, inclusion: { in: VALID_STATUS }
+  validates :name, :description, :status, presence: true
 
-  scope :only_public, -> { where(status: 'public') }
+  validates :emoji, emoji: true
+
   scope :exclude, ->(ids) { where.not(id: ids) }
+  scope :top,       lambda { |l| limit(l) }
+
+  def content
+    emoji
+  end
+
+  def content=(value)
+    self.emoji = value
+  end
 
   def public?
     status == 'public'

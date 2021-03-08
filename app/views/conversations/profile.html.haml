@@ -1,0 +1,14 @@
+- presenter = ConversationPresenter.new(@conversation)
+.card
+  .card-body
+    .card-title
+      .row
+        %h1.col
+          = presenter.emoji
+        .col
+          = link_to 'Back', current_user ? @conversation : root_path, class: 'btn btn-secondary float-right'
+      %h3.col.row
+        = presenter.title
+    %p.card-text= presenter.description
+%br/
+= link_to 'Home page', root_path, class: 'btn btn-sm btn-outline-secondary mb-5'

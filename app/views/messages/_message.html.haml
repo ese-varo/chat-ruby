@@ -14,5 +14,5 @@
             = link_to 'Delete', [message.conversation, message], method: :delete,
                         class: 'btn btn-outline-danger btn-sm', remote: true
   - if message.image.attached?
-    %image.img-thumbnail.mb-3.mt-3{src: "=(url_for(message.image))"}
+    = image_tag (message.image), class: 'img-thumbnail mb-3 mt-3'
   .card-subtitle.mb-2.text-muted= message.date

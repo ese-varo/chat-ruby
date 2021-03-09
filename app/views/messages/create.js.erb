@@ -1,8 +1,11 @@
 messages = document.getElementById('messages')
+message = document.createElement('div')
+message.className = 'card mt-3 col-md-8 bg-corn'
+message.innerHTML = "<%= j render @message %>"
 
 messages.appendChild(document.createElement('div'))
-messages.lastChild.className = 'card mt-3 col-md-8 bg-corn'
-messages.lastChild.innerHTML = "<%= j render @message %>"
+messages.lastChild.className = 'd-flex justify-content-end'
+messages.lastChild.appendChild(message)
 
 document.getElementById('message-input').value = ''
 document.getElementById('message-image-picker').value = ''

@@ -1,2 +1,8 @@
 - @conversation.messages.each do |message|
-  .card.mt-3.col-md-8{class: (message.user_id == current_user.id) ? 'bg-corn' : 'bg-persian'}= render message
+  - if message.user_id == current_user.id
+    .d-flex.justify-content-end
+      .card.mt-3.col-md-8.bg-corn= render message
+  - else
+    .d-flex.justify-content-start
+      .card.mt-3.col-md-8.bg-persian= render message
+

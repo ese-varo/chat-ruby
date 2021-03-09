@@ -10,10 +10,12 @@
       </div>
       <div class="col-sm">
         <div class="btn-group float-right" role="group">
-          <%= link_to 'Update', edit_conversation_message_path(message.conversation, message),
-            class: 'btn btn-outline-primary btn-sm' %>
-          <%= link_to 'Delete', [message.conversation, message], method: :delete,
-                      class: 'btn btn-outline-danger btn-sm', remote: true %>
+          <% if message.username == current_user.username %>
+            <%= link_to 'Update', edit_conversation_message_path(message.conversation, message),
+              class: 'btn btn-outline-primary btn-sm' %>
+            <%= link_to 'Delete', [message.conversation, message], method: :delete,
+              class: 'btn btn-outline-danger btn-sm', remote: true %>
+          <% end %>
         </div>
       </div>
     </div>

@@ -63,3 +63,7 @@ gem 'emoji'
 gem 'rexml'
 gem 'rails-observers'
 gem 'haml-rails', '~> 2.0'
+
+# Active storage validation
+gem 'active_storage_validations'
+gem 'mini_magick', '>= 4.9.5'

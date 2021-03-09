@@ -3,8 +3,10 @@ class Message < ApplicationRecord
   belongs_to :conversation
 
   delegate :username, to: :user
-  has_one_attached :image
-
+  has_one_attached :image 
+  validates :image, 
+      content_type: ['image/png', 'image/jpg', 'image/jpeg']
+ 
   def removed?
     removed
   end

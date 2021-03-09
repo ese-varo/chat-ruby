@@ -8,9 +8,16 @@ class MessagesController < ApplicationController
   def create
     @message = @conversation.messages.create(message_params)
     EmojiFiller.call(@message)
-    respond_to do |format|
-      format.html
-      format.js
+    if @message.valid?
+      respond_to do |format|
+        format.html
+        format.js
+      end
+    else
+      @message.errors.full_messages.each do |error_message|
+        flash[:error] = error_message
+      end
+      redirect_to @conversation 
     end
   end
 
@@ -19,7 +26,13 @@ class MessagesController < ApplicationController
 
   def update
     @message.update(message_params)
-    @message.image.purge if params[:message][:remove_asset] == '1'
+    if @message.valid?
+      @message.image.purge if params[:message][:remove_asset] == '1'
+    else
+      @message.errors.full_messages.each do |error_message|
+        flash[:error] = error_message
+      end
+    end
     redirect_to @conversation
   end
 

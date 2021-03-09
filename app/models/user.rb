@@ -15,9 +15,10 @@ class User < ApplicationRecord
   USERNAME = /\A[a-zA-Z0-9_][a-zA-Z0-9\.+\-_@ ]+\z/
 
   validates :email, email: true
-  validates_uniqueness_of :email, message: 'is already taken'
+  validates_uniqueness_of :email, message: 'has already been taken'
 
   validates :username,
+    presence: true,
     format: {
       with: USERNAME,
       message: "should use only letters and numbers."
@@ -29,12 +30,14 @@ class User < ApplicationRecord
     }
 
   validates :password,
+    presence: true,
     confirmation: { if: :require_password? },
     length: {
       minimum: 8,
       if: :require_password?
     }
   validates :password_confirmation,
+    presence: true,
     length: {
       minimum: 8,
       if: :require_password?

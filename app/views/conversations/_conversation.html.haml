@@ -1,2 +1,2 @@
 - @conversation.messages.each do |message|
-  .card.mt-3.col-md-8.message= render message
+  .card.mt-3.col-md-8{class: (message.user_id == current_user.id) ? 'bg-corn' : 'bg-persian'}= render message

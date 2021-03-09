@@ -1,0 +1,11 @@
+@import 'colors.scss';
+
+.bg{
+  &-corn{
+    background: $corn;
+  }
+
+  &-persian{
+    background: $persian-green;
+  }
+}

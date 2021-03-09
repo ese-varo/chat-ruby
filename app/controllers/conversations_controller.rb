@@ -81,6 +81,8 @@ class ConversationsController < ApplicationController
 
   def set_emoji
     EmojiSetter.call(@conversation)
+    ensure
+      add_users_to_conversation
   end
 
   def add_users_to_conversation
@@ -89,7 +91,7 @@ class ConversationsController < ApplicationController
   end
 
   def conversation_params
-    params.require(:conversation).permit(:user_id, :name, :description, :emoji, :status)
+    params.require(:conversation).permit(:user_id, :name, :description, :emoji, :status, :user_ids)
   end
 
   def set_conversation

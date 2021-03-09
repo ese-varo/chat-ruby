@@ -20,11 +20,11 @@
       </div>
     </div>
   <% end %>
-  <% if message.image.attached? %>
-    <image src="<%=(url_for(message.image))%>" class="img-thumbnail mb-3 mt-3">
-  <% end %>
-  <div class="card-subtitle mb-2 text-muted">
-    <%= message.date %>
+    <% if message.image.attached? %>
+      <image src="<%=(url_for(message.image))%>" class="img-thumbnail mb-3 mt-3">
+      <% end %>
+      <div class="card-subtitle mb-2 text-muted">
+        <%= message.date %>
+      </div>
+    </p>
   </div>
-  </p>
-</div>

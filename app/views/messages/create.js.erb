@@ -1,7 +1,7 @@
 messages = document.getElementById('messages')
 
 messages.appendChild(document.createElement('div'))
-messages.lastChild.className = 'card mt-3 col-md-8 message'
+messages.lastChild.className = 'card mt-3 col-md-8 bg-corn'
 messages.lastChild.innerHTML = "<%= j render @message %>"
 
 document.getElementById('message-input').value = ''

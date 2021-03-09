@@ -80,11 +80,9 @@ class ConversationsController < ApplicationController
   end
 
   def set_emoji
-    begin
-      EmojiSetter.call(@conversation)
+    EmojiSetter.call(@conversation)
     ensure
       add_users_to_conversation
-    end
   end
 
   def add_users_to_conversation

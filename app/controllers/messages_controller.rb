@@ -14,9 +14,7 @@ class MessagesController < ApplicationController
         format.js
       end
     else
-      @message.errors.full_messages.each do |error_message|
-        flash[:error] = error_message
-      end
+      @message.errors.full_messages.each { |error_message| flash[:error] = error_message }
       redirect_to @conversation 
     end
   end
@@ -29,9 +27,7 @@ class MessagesController < ApplicationController
     if @message.valid?
       @message.image.purge if params[:message][:remove_asset] == '1'
     else
-      @message.errors.full_messages.each do |error_message|
-        flash[:error] = error_message
-      end
+      @message.errors.full_messages.each { |error_message| flash[:error] = error_message } if @message.valid?
     end
     redirect_to @conversation
   end

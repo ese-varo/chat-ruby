@@ -26,11 +26,8 @@ describe Message do
     end
 
     it "can not have an attached image" do
-
     end
-
     it "can have an attached image" do
-
     end
   end
 
@@ -49,11 +46,8 @@ describe Message do
   end
 
   it "lets me change its attached image" do
-
   end
-
   it "lets me remove its attached image" do
-
   end
 
   it "returns a date string" do

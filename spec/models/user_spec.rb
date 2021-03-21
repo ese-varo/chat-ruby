@@ -60,25 +60,18 @@ describe User do
   end
 
   it "returns a collection of conversations with other user" do
-    chuy = create(:user, username: 'chuy', email: 'chuy@gmail.com')
-    mauricio = create(:user, username: 'mauricio', email: 'mauricio@gmail.com')
-    first_conversation = chuy.conversations.create(
-      name: 'A nice conversation',
-      description: 'Lets have a nice conversation',
-      emoji: ':rainbow:')
-    second_conversation = mauricio.conversations.create(
-      name: 'Why rspec is a good option',
-      description: 'Lets talk about using rspec with rails',
-      emoji: ':dog_face:')
-    first_conversation.users << mauricio
-    second_conversation.users << chuy
-    expect(mauricio.shared_conversations_with(chuy)).to eq [first_conversation, second_conversation]
+    first_user = create(:user)
+    second_user = create(:user)
+    first_conversation = create(:conversation, users: [first_user, second_user])
+    second_conversation = create(:conversation, users: [first_user, second_user])
+    expect(first_user.shared_conversations_with(second_user))
+      .to eq [first_conversation, second_conversation]
   end
 
   it "returns a collection of users ordered by username" do
-    zergio = create(:user, username: 'zergio', email: 'zergio@gmail.com')
-    romario = create(:user, username: 'romario', email: 'elromario@gmail.com')
-    juan = create(:user, username: 'juan', email: 'juan@gmail.com')
+    zergio = create(:user, username: 'zergio')
+    romario = create(:user, username: 'romario')
+    juan = create(:user, username: 'juan')
     expect(User.ordered).to eq [juan, romario, zergio]
   end
 end

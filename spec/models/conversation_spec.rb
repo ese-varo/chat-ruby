@@ -74,6 +74,6 @@ describe Conversation do
 
   it "lets me know if its status is public" do
     @conversation.update_attribute :status, 'private'
-    expect(@conversation.public?).not_to be_truthy
+    expect(@conversation).not_to be_public
   end
 end

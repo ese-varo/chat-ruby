@@ -1,21 +1,19 @@
 require "rails_helper"
 
 RSpec.describe "A message" do
-  let!(:tyler) { create(:user, username: "tyler", password: "eseltyler",
-                 password_confirmation: "eseltyler") }
-  let!(:conversation) { create(:conversation,
-                 name: "La vida es como una lenteja", users: [tyler]) }
-  let!(:message) { create(:message, content: "Don't give up!", user: tyler,
-                          conversation: conversation) }
+  let!(:user) { create(:user) }
+  let!(:conversation) { create(:conversation, users: [user]) }
+  let!(:message) { create(:message, user: user, conversation: conversation) }
   before(:each) do
     visit(sign_in_path)
-    fill_in("Username", with: "tyler")
-    fill_in("Password", with: "eseltyler")
+    fill_in("Username", with: user.username)
+    fill_in("Password", with: user.password)
     click_on("Log in")
+    visit(conversation_path(conversation))
   end
 
   it "has a user" do
-    expect(message.user).to have_attributes(username: "tyler")
+    expect(message.user).to have_attributes(username: user.username)
   end
 
   it "has a conversation" do
@@ -23,37 +21,45 @@ RSpec.describe "A message" do
   end
 
   it "is displayed correctly" do
-    visit(conversation_path(conversation))
     expect(page).to have_selector("div", text: message.content)
     expect(page).to have_selector("p", text: message.user.username)
   end
 
   it "can be edited and saved with valid data" do
-    visit(conversation_path(conversation))
     click_on("update-#{message.id}")
     expect(page).to have_selector("h3", text: "Edit message")
   end
 
   it "can be edited and not be saved with invalid data" do
-    visit(conversation_path(conversation))
+    second_message = build(:message)
     click_on("update-#{message.id}")
     expect(current_path).to eq(edit_conversation_message_path(conversation, message))
-    fill_in("Message", with: "Hola Mundo!")
+    fill_in("Message", with: second_message.content)
     click_on("Save")
-    expect(page).to have_selector("#message_#{message.id} .card-body .row .content", text: "Hola Mundo!")
+    expect(page).to have_selector("#message_#{message.id} .card-body .row .content",
+                                  text: second_message.content)
   end
 
   it "is not updated with invalid data" do
-    visit(conversation_path(conversation))
+    previous_message_content = message.content
     click_on("update-#{message.id}")
-    fill_in("Message", with: "")
+    fill_in("Message", with: nil)
     click_on("Save")
-    expect(page).to have_selector("#message_#{message.id} .card-body .row .content", text: "Don't give up!")
+    expect(page).to have_selector("#message_#{message.id} .card-body .row .content",
+                                  text: previous_message_content)
   end
 
   it "can be deleted" do
-    visit(conversation_path(conversation))
     click_on("delete-#{message.id}")
     expect(page).to have_selector("#message_#{message.id} .card-body .content", text: "This message was removed")
+  end
+
+  xit "lets me add an image" do
+  end
+
+  xit "lets me change its attached image" do
+  end
+
+  xit "lets me remove its attached image" do
   end
 end

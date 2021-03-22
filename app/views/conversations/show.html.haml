@@ -4,7 +4,7 @@
     .card-title
       .row
         %h3.col= "#{presenter.title} #{presenter.emoji}"
-        %span.text-muted
+        %span.participants.text-muted
           = "(with: #{presenter.participants_list(current_user.username)}) "
           %span.badge.bg-info.text-light
             %span.badge.rounded-pill.bg-warning.text-dark#messages-counter

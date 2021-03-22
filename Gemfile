@@ -18,7 +18,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'letter_opener'
   gem 'rspec-rails'
-  gem 'factory_bot_rails'
+  gem 'rails-controller-testing'
 end
 
 group :development do
@@ -32,13 +32,13 @@ end
 group :test do
   gem 'capybara', '>= 3.26'
   gem 'capybara-screenshot'
+  gem 'factory_bot_rails'
   gem 'selenium-webdriver'
   gem 'webdrivers'
   gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
   gem 'database_cleaner', '~> 1.3.0'
   gem 'launchy', '~> 2.5'
   gem 'simplecov', require: false
-  gem 'rails-controller-testing'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

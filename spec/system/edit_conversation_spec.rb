@@ -1,23 +1,21 @@
 require "rails_helper"
 
 RSpec.describe "A conversation" do
-  let!(:tyler) { create(:user, username: "tyler", password: "eseltyler",
-                 password_confirmation: "eseltyler") }
-  let!(:conversation) { create(:conversation,
-                 name: "La vida es como una lenteja", users: [tyler]) }
+  let!(:user) { create(:user) }
+  let!(:conversation) { create(:conversation, users: [user]) }
   before(:each) do
     visit(sign_in_path)
-    fill_in("Username", with: "tyler")
-    fill_in("Password", with: "eseltyler")
+    fill_in("Username", with: user.username)
+    fill_in("Password", with: user.password)
     click_on("Log in")
   end
 
   it "has a user" do
-    expect(conversation.users.first).to have_attributes(username: "tyler")
+    expect(conversation.users.first).to have_attributes(username: user.username)
   end
 
   it "can have messages" do
-    conversation.messages << create_list(:message, 5, user: tyler)
+    conversation.messages << create_list(:message, 5, user: user)
     expect(conversation.messages.count).to be 5
   end
 
@@ -27,18 +25,19 @@ RSpec.describe "A conversation" do
   end
 
   describe "can be edited" do
+    let!(:second_user) { create(:user) }
     before(:each) do
-      create(:user, username: 'Groot')
       visit(edit_conversation_path(conversation))
     end
 
     it "and with correct data is saved successfully" do
-      fill_in("Title", with: "Lets talk about COBOL")
-      fill_in("Description", with: "He is a pretty old boy")
-      fill_in("Emoji", with: ":rainbow:")
-      check('Groot')
+      second_conversation = build(:conversation)
+      fill_in("Title", with: second_conversation.name)
+      fill_in("Description", with: second_conversation.description)
+      fill_in("Emoji", with: second_conversation.emoji)
+      check(second_user.username)
       click_on("Save")
-      expect(page).to have_selector("h3", text: "Lets talk about COBOL")
+      expect(page).to have_selector("h3", text: second_conversation.name)
     end
 
     it "and correctly change its status to private" do
@@ -67,7 +66,7 @@ RSpec.describe "A conversation" do
     end
 
     it "and with unknown Emoji is set a default one" do
-      fill_in("Emoji", with: ":oh_no:")
+      fill_in("Emoji", with: ":#{Faker::Lorem.word}:")
       click_on("Save")
       expect(page).to have_selector(".alert-warning",
         text: "You provided an invalid emoji! A default one (❤) has been setted")

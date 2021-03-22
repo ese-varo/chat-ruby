@@ -1,28 +1,45 @@
 require "rails_helper"
 
 RSpec.describe "A conversation" do
+  let(:user) { create(:user) }
+  let(:conversation) { build(:conversation) }
   before(:each) do
-    create(:user, username: "tyler", password: "eseltyler",
-           password_confirmation: "eseltyler")
     visit(sign_in_path)
-    fill_in("Username", with: "tyler")
-    fill_in("Password", with: "eseltyler")
+    fill_in("Username", with: user.username)
+    fill_in("Password", with: user.password)
     click_on("Log in")
   end
 
-  let!(:ramon) { create(:user, username: 'ramon') }
-  let!(:dolores) { create(:user, username: 'dolores') }
+  let!(:second_user) { create(:user) }
+  let!(:third_user) { create(:user) }
 
   it "can be started correctly" do
     click_on("New chat")
     expect(page).to have_selector("p", text: "Who do you want to chat with?")
-    fill_in("Title", with: "Lets talk about COBOL")
-    fill_in("Description", with: "He is a pretty old boy")
-    fill_in("Emoji", with: ":rainbow:")
-    check(ramon.username)
-    check(dolores.username)
+    fill_in("Title", with: conversation.name)
+    fill_in("Description", with: conversation.description)
+    fill_in("Emoji", with: conversation.emoji)
+    check(second_user.username)
+    check(third_user.username)
     click_on("Save")
-    expect(page).to have_selector("h3", text: "Lets talk about COBOL")
+    expect(page).to have_selector("h3", text: conversation.name)
+  end
+
+  it "can be started correctly with many users" do
+    forth_user = create(:user)
+    fifth_user = create(:user)
+    click_on("New chat")
+    expect(page).to have_selector("p", text: "Who do you want to chat with?")
+    fill_in("Title", with: conversation.name)
+    fill_in("Description", with: conversation.description)
+    fill_in("Emoji", with: conversation.emoji)
+    check(second_user.username)
+    check(third_user.username)
+    check(forth_user.username)
+    check(fifth_user.username)
+    click_on("Save")
+    expect(page).to have_selector("h3", text: conversation.name)
+    expect(page).to have_selector(".participants", text: /.../)
   end
 
   it "with invalid title can't be created" do
@@ -50,11 +67,11 @@ RSpec.describe "A conversation" do
   it "with unknown emoji gets a default assigned" do
     click_on("New chat")
     expect(page).to have_selector("p", text: "Who do you want to chat with?")
-    fill_in("Title", with: "Lets talk about COBOL")
-    fill_in("Description", with: "He is a pretty old boy")
-    fill_in("Emoji", with: ":perrito:")
-    check(ramon.username)
-    check(dolores.username)
+    fill_in("Title", with: conversation.name)
+    fill_in("Description", with: conversation.description)
+    fill_in("Emoji", with: ":#{Faker::Lorem.word}:")
+    check(second_user.username)
+    check(third_user.username)
     click_on("Save")
     expect(page).to have_selector(".alert-warning",
       text: "You provided an invalid emoji! A default one (❤) has been setted")

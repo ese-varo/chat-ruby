@@ -4,13 +4,13 @@ describe PagesController, type: :controller do
 
   describe 'GET #index' do
     context 'with active login session' do
-      it 'populates an array of the current user conversations' do
+      xit 'populates an array of the current user conversations' do
       end
 
-      it "redirect to conversations :index" do
+      xit "redirect to conversations :index" do
       end
 
-      it 'populates an arry of public conversations' do
+      xit 'populates an arry of public conversations' do
       end
     end
 
@@ -18,10 +18,10 @@ describe PagesController, type: :controller do
       it "populates a collection of public conversations" do
         first_conversation = create(:conversation)
         second_conversation  = create(:conversation)
-        hi = create(:message)
-        hey = create(:message)
-        second_conversation.messages << hey
-        first_conversation.messages << hi
+        first_message = create(:message)
+        second_message = create(:message)
+        second_conversation.messages << second_message
+        first_conversation.messages << first_message
         get :index
         expect(assigns(:public_conversations)).to match_array(
           [first_conversation, second_conversation])

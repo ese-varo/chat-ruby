@@ -6,7 +6,7 @@ describe User do
   end
 
   it "is invalid without a username" do
-    user = build(:user, username: '')
+    user = build(:user, username: nil)
     user.valid?
     expect(user.errors[:username]).to include("can't be blank")
   end
@@ -24,37 +24,40 @@ describe User do
   end
 
   it "is invalid without an email address" do
-    user = build(:user, email: '')
+    user = build(:user, email: nil)
     user.valid?
     expect(user.errors[:email]).to include("can't be blank")
   end
 
   it "is invalid with a duplicate email address" do
-    create(:user, email: 'elfulano@example.com')
-    user = build(:user, email: 'elfulano@example.com')
-    user.valid?
-    expect(user.errors[:email]).to include('has already been taken')
+    existing_user = create(:user)
+    new_user = build(:user, email: existing_user.email)
+    new_user.valid?
+    expect(new_user.errors[:email]).to include('has already been taken')
   end
 
   it "is invalid with a duplicate username" do
-    create(:user, username: 'elfulano')
-    user = build(:user, username: 'elfulano')
-    user.valid?
-    expect(user.errors[:username]).to include('has already been taken')
+    existing_user = create(:user)
+    new_user = build(:user, username: existing_user.username)
+    new_user.valid?
+    expect(new_user.errors[:username]).to include('has already been taken')
   end
 
-  it "is invalid with a username greater than 3 or less than 100 chars" do
-    expect(build(:user)).to be_valid
+  it "is invalid with a username less than 3 or greater than 100 chars" do
+    expect(build(:user, username: Faker::Internet.username(specifier: 100..200)))
+      .to_not be_valid
   end
 
   it "is invalid with unmatching password" do
-    user = build(:user, password_confirmation: 'confirmation')
+    user = build(:user, password_confirmation: Faker::Internet.password(min_length: 8))
     user.valid?
     expect(user.errors[:password_confirmation]).to include("doesn't match Password")
   end
 
   it "is invalid with password less than 8 chars" do
-    user = build(:user, password: 'less', password_confirmation: 'less')
+    short_password = Faker::Internet.password(min_length: 2, max_length: 4)
+    user = build(:user, password: short_password,
+                 password_confirmation: short_password)
     user.valid?
     expect(user.errors[:password]).to include("is too short (minimum is 8 characters)")
   end

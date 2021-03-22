@@ -2,7 +2,7 @@
   %ul.list-group
     - conversations.each do |conversation|
       - presenter = ConversationPresenter.new(conversation)
-      %li.list-group-item.d-flex.justify-content-between.align-items-center.conversation
+      %li.list-group-item.d-flex.justify-content-between.align-items-center.conversation[conversation]
         %h4= "#{presenter.title} #{presenter.emoji}"
         .btn-group.float-right{ role: 'group' }
         - if current_user

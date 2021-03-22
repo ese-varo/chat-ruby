@@ -13,7 +13,7 @@
         .col
           = link_to 'Edit', edit_conversation_path, class: 'btn btn-secondary float-right'
           = link_to 'Profile', profile_path, class: 'btn btn-secondary float-right mr-3'
-      %p.text-light
+      %p#status.text-light
         %span.badge.bg-secondary= presenter.status
     .chat-box
       %section#messages.chat-box__content

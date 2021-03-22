@@ -1,8 +1,8 @@
 - @conversation.messages.each do |message|
   - if message.user_id == current_user.id
     .d-flex.justify-content-end
-      .card.mt-3.col-md-8.bg-corn= render message
+      .card.mt-3.col-md-8.bg-corn[message]= render message
   - else
     .d-flex.justify-content-start
-      .card.mt-3.col-md-8.bg-persian= render message
+      .card.mt-3.col-md-8.bg-persian[message]= render message
 

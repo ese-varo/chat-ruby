@@ -34,7 +34,26 @@ RSpec.describe "A message" do
     expect(page).to have_selector("h3", text: "Edit message")
   end
 
-  it "can be edited and not be saved with invalid data"
+  it "can be edited and not be saved with invalid data" do
+    visit(conversation_path(conversation))
+    click_on("update-#{message.id}")
+    expect(current_path).to eq(edit_conversation_message_path(conversation, message))
+    fill_in("Message", with: "Hola Mundo!")
+    click_on("Save")
+    expect(page).to have_selector("#message_#{message.id} .card-body .row .content", text: "Hola Mundo!")
+  end
 
-  it "can be deleted"
+  it "is not updated with invalid data" do
+    visit(conversation_path(conversation))
+    click_on("update-#{message.id}")
+    fill_in("Message", with: "")
+    click_on("Save")
+    expect(page).to have_selector("#message_#{message.id} .card-body .row .content", text: "Don't give up!")
+  end
+
+  it "can be deleted" do
+    visit(conversation_path(conversation))
+    click_on("delete-#{message.id}")
+    expect(page).to have_selector("#message_#{message.id} .card-body .content", text: "This message was removed")
+  end
 end

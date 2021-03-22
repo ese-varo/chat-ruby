@@ -2,17 +2,17 @@
   %p.card-title.messager= message.username
   %p.col-8.card-text
   - if message.removed?
-    %p.text-muted.removed This message was removed
+    %p.content.text-muted.removed This message was removed
   - else
     .row
-      .col-sm= message.content
+      .content.col-sm= message.content
       .col-sm
         .btn-group.float-right{role: 'group'}
           - if message.username == current_user.username
             = link_to 'Update', edit_conversation_message_path(message.conversation, message),
               class: 'btn btn-outline-primary btn-sm', id: "update-#{message.id}"
             = link_to 'Delete', [message.conversation, message], method: :delete,
-                        class: 'btn btn-outline-danger btn-sm', remote: true
+              class: 'btn btn-outline-danger btn-sm', id: "delete-#{message.id}", remote: true
   - if message.image.attached?
     = image_tag (message.image), class: 'img-thumbnail mb-3 mt-3'
   .card-subtitle.mb-2.text-muted= message.date

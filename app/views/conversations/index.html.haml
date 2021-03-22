@@ -23,9 +23,9 @@
                 :id => "conversation-#{presenter.id}"}
                 %h4= "#{presenter.title} #{presenter.emoji}"
                 .btn-group.float-right{ :role => "group" }
-                  = link_to 'See', conversation, class: 'btn btn-info btn-sm'
+                  = link_to 'See', conversation, class: 'btn btn-info btn-sm', id: "btn-see-#{presenter.id}"
                   = link_to 'Delete', conversation, method: :delete, remote: true,
-                    class: 'btn btn-danger btn-sm'
+                    class: 'btn btn-danger btn-sm', id: "btn-delete-#{presenter.id}"
     .card-body
       .card-title
         %h3 Public conversations

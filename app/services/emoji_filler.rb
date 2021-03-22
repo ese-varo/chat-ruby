@@ -18,7 +18,7 @@ class EmojiFiller < ApplicationService
   end
 
   def find_emojis
-    @text.content.split.reduce('') do |res, elem|
+    @text.content.to_s.split.reduce('') do |res, elem|
       moji = INDEX.find_by_name(elem[1..-2])
       res += moji ? "#{moji['moji']} " : "#{elem} "
     end

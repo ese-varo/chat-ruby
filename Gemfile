@@ -31,6 +31,7 @@ end
 
 group :test do
   gem 'capybara', '>= 3.26'
+  gem 'capybara-screenshot'
   gem 'selenium-webdriver'
   gem 'webdrivers'
   gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'

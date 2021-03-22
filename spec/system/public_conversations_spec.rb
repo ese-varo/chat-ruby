@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "visit index without log in" do
+RSpec.describe "Public conversations without log in" do
   before(:each) do
     create(:conversation, messages: [create(:message)])
     create(:conversation, messages: [create(:message)])
@@ -28,5 +28,14 @@ RSpec.describe "visit index without log in" do
     find("#conversation_#{another_conversation.id} a").click
     expect(page).to have_selector(
       "h3", text: another_conversation.name)
+  end
+
+  it "doesn't allow access private conversations" do
+    tyler = create(:user, username: "tyler", password: "eseltyler",
+                   password_confirmation: "eseltyler")
+    conversation = create(:conversation,
+                          status: "private", users: [tyler])
+    visit(profile_path(conversation))
+    expect(page).to have_selector(".alert-warning", text: "You don't have access to this section 💔")
   end
 end

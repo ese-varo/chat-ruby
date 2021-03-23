@@ -15,7 +15,8 @@ class SendConversationsSummaryEmailJob < ApplicationJob
   end
 
   def new_conversations
-    @new_conversations ||= @user.conversations.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
+    @new_conversations ||= @user.conversations.where(created_at:
+      Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
   end
 
   def new_messages_count

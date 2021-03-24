@@ -53,13 +53,4 @@ RSpec.describe "A message" do
     click_on("delete-#{message.id}")
     expect(page).to have_selector("#message_#{message.id} .card-body .content", text: "This message was removed")
   end
-
-  xit "lets me add an image" do
-  end
-
-  xit "lets me change its attached image" do
-  end
-
-  xit "lets me remove its attached image" do
-  end
 end

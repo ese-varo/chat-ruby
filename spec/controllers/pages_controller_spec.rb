@@ -3,17 +3,6 @@ require 'rails_helper'
 describe PagesController, type: :controller do
 
   describe 'GET #index' do
-    context 'with active login session' do
-      xit 'populates an array of the current user conversations' do
-      end
-
-      xit "redirect to conversations :index" do
-      end
-
-      xit 'populates an arry of public conversations' do
-      end
-    end
-
     context 'without active login session' do
       it "populates a collection of public conversations" do
         first_conversation = create(:conversation)

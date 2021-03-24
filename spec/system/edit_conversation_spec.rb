@@ -77,10 +77,4 @@ RSpec.describe "A conversation" do
     visit(profile_path(conversation))
     expect(page).to have_selector("h3", text: conversation.name)
   end
-
-  xit "can be deleted" do
-    visit(root_path)
-    click_on("Delete")
-    expect(page).not_to have_selector("h4", text: conversation.name)
-  end
 end

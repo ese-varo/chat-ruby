@@ -9,13 +9,8 @@ class EmailValidator < ActiveModel::EachValidator
   /ix
 
   def validate_each(record, attribute, value)
-    if value.blank? 
-      record.errors.add(attribute, "can't be blank")
-    else
-      record.errors.add(attribute, 'should look like an email address') unless
-        value =~ EMAIL
-      record.errors.add(attribute, 'should not be longer than 100 chars') unless
-        value.length <= 100
-    end
+    return record.errors.add(attribute, "can't be blank") unless value
+    return record.errors.add(attribute, 'should look like an email address') unless value =~ EMAIL
+    record.errors.add(attribute, 'should not be longer than 100 chars') unless value.length <= 100
   end
 end

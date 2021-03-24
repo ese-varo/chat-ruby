@@ -15,7 +15,8 @@
                 </span>
               </p>
               <% if user.shared_conversations_with(current_user).any? %>
-                <%= form_with url: shared_conversation_path, method: :get do |f| %>
+                <%= form_with url: shared_conversation_path, method: :get,
+                  id: "conversations-with-#{user.username}" do |f| %>
                   <%= f.collection_select :conversation_id,
                     user.shared_conversations_with(current_user), :id, :name %>
                   <%= f.submit 'See chat', class: 'btn btn-primary btn-sm mt-3' %>

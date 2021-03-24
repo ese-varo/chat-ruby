@@ -18,14 +18,14 @@
         - if current_user
           %ul.list-group
             - current_user.conversations.each do |conversation|
-              - presenter = ConversationPresenter.new(conversation)
+              - conversation_presenter = ConversationPresenter.new(conversation)
               %li{:class => 'list-group-item d-flex justify-content-between align-items-center conversation',
-                :id => "conversation-#{presenter.id}"}
-                %h4= "#{presenter.title} #{presenter.emoji}"
+                :id => "conversation-#{conversation_presenter.id}"}
+                %h4= "#{conversation_presenter.title} #{conversation_presenter.emoji}"
                 .btn-group.float-right{ :role => "group" }
-                  = link_to 'See', conversation, class: 'btn btn-info btn-sm', id: "btn-see-#{presenter.id}"
+                  = link_to 'See', conversation, class: 'btn btn-info btn-sm', id: "btn-see-#{conversation_presenter.id}"
                   = link_to 'Delete', conversation, method: :delete, remote: true,
-                    class: 'btn btn-danger btn-sm', id: "btn-delete-#{presenter.id}"
+                    class: 'btn btn-danger btn-sm', id: "btn-delete-#{conversation_presenter.id}"
     .card-body
       .card-title
         %h3 Public conversations

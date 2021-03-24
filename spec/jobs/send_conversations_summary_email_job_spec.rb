@@ -8,7 +8,6 @@ RSpec.describe SendConversationsSummaryEmailJob do
 
   describe ".perform_later" do
     it "adds the job to the default queue" do
-      # allow(ConversationMailer).to receive_message_chain(:conversations_summary, :deliver_now)
       described_class.perform_later(user)
       expect(enqueued_jobs.last[:job]).to eq described_class
     end

@@ -3,7 +3,6 @@ import Content from './Content'
 import RemovedContent from './RemovedContent'
 
 const Message = (props) => {
-  console.log(props)
   return (
     props.removed ? (
       <div className="card-body">

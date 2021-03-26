@@ -1,27 +1,38 @@
 import React, { Component } from 'react'
 import Message from '../Message/Message'
+import axios from 'axios'
 
 class Conversation extends Component {
   constructor(){
     super()
 
     this.state = {
-      messages: [
-        { id: 1, username: 'El fulano', removed: false, content: 'The content', date: '10 of jan' },
-        { id: 2, username: 'El aquel', removed: true, content: 'Ora ora', date: '13 of may' },
-        { id: 3, username: 'El man', removed: false, content: 'jejeje', date: '15 of aug' },
-        { id: 4, username: 'El otro', removed: false, content: 'Especialmente hoy', date: '1 of jun' },
-      ]
+      conversation_messages: []
     }
   }
-  render() {
-    const messages = this.state.messages.map( (message) => {
 
+  componentDidMount(){
+    const queryString = window.location.href.split('/')
+    const conversation_id = queryString[queryString.length - 1]
+    const url = `/conversations/${conversation_id}.json`
+
+    axios.get(url)
+    .then(response =>{
+      this.setState({conversation_messages: response.data})
+    })
+    .catch(response =>{
+    })
+  }
+
+  render() {
+    const messages = this.state.conversation_messages.map( (message) => {
       return(
-        message.removed ? (
+        message.current_user ? (
           <div key={message.id} className="d-flex justify-content-end">
             <div className="card mt-3 col-md-8 bg-corn">
-              <Message username={message.username} removed={message.removed} content={message.content} date={message.date}/>
+              <Message id={message.id} conversation_id={message.conversation_id}
+                       username={message.username} removed={message.removed}
+                       content={message.content} date={message.date}/>
             </div>
           </div>
         ) : (
@@ -37,7 +48,6 @@ class Conversation extends Component {
     return (
       <section id="messages" className="chat-box__content">
         {messages}
-        <div>This is our Conversation component.</div>
       </section>
     )
   }

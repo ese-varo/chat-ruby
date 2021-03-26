@@ -16,8 +16,6 @@
       %p#status.text-light
         %span.badge.bg-secondary= presenter.status
     #chat-box
-      -# %section#messages.chat-box__content
-      -#   = render @conversation
 
 %section.chat-box__input
   .mb-3.mt-3
@@ -37,5 +35,5 @@
                                   id: 'message-image-picker'
 %br/
 = link_to 'Home page', root_path, class: 'btn btn-sm btn-outline-secondary mb-5'
-= javascript_pack_tag 'conversation_show'
 = javascript_pack_tag 'conversation_display'
+= javascript_pack_tag 'conversation_show'

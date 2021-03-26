@@ -34,6 +34,7 @@ class ConversationsController < ApplicationController
       format.html
       format.json
     end
+    # render json: { data: { conversation: @conversation, messages: @conversation.messages } }
   end
 
   def edit

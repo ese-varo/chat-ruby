@@ -6,9 +6,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Conversation from '../components/Conversation/Conversation'
 
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-    <Conversation/>,
-    document.getElementById('chat-box'),
-  )
-})
+ReactDOM.render(
+  <Conversation/>,
+  document.getElementById('chat-box'),
+)

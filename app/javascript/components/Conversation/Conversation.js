@@ -16,12 +16,16 @@ class Conversation extends Component {
     const conversation_id = queryString[queryString.length - 1]
     const url = `/conversations/${conversation_id}.json`
 
-    axios.get(url)
-    .then(response =>{
-      this.setState({conversation_messages: response.data})
-    })
-    .catch(response =>{
-    })
+    this.getMessages(url)
+  }
+
+  getMessages = async (url) => {
+    try {
+      const resp = await axios.get(url)
+      this.setState({conversation_messages: resp.data})
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   render() {

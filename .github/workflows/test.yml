@@ -7,16 +7,21 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+env:
+  PG_USER: ${{ secrets.POSTGRES }}
+  PG_PASSWORD: ${{ secrets.POSTGRES }}
+
 jobs:
   tests:
     name: Tests
     runs-on: ubuntu-latest
+
     services:
       postgres:
         image: postgres
         env:
-          POSTGRES_USER: chatruby
-          POSTGRES_PASSWORD: chatruby
+          POSTGRES_USER: PG_USER
+          POSTGRES_PASSWORD: PG_PASSWORD
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -56,8 +61,8 @@ jobs:
         env:
           RAILS_ENV: test
           PGHOST: localhost
-          PGUSER: chatruby
-          PGPASSWORD: chatruby
+          PGUSER: PG_USER
+          PGPASSWORD: PG_PASSWORD
         run: |
           bin/rails db:setup
 

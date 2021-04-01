@@ -1,0 +1,8 @@
+test:
+  adapter: postgresql
+  host: localhost
+  encoding: unicode
+  database: chatruby_test
+  pool: 20
+  username: <%= Rails.application.credentials.PG_USERNAME %>
+  password: <%= Rails.application.credentials.PG_PASSWORD %>

@@ -22,8 +22,8 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
   host: localhost
-  username: <%= ENV['PG_USERNAME'] %>
-  password: <%= ENV['PG_PASSWORD'] %>
+  username: <%= Rails.application.credentials.PG_USERNAME %>
+  password: <%= Rails.application.credentials.PG_PASSWORD %>
 
 development:
   <<: *default
@@ -86,5 +86,3 @@ test:
 production:
   <<: *default
   database: chatruby_production
-  username: chatruby
-  password: <%= ENV['GROWING_DATABASE_PASSWORD'] %>

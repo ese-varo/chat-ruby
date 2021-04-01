@@ -15,8 +15,8 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_USER: chatruby
-          POSTGRES_PASSWORD: chatruby
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -56,8 +56,8 @@ jobs:
         env:
           RAILS_ENV: test
           PGHOST: localhost
-          PGUSER: chatruby
-          PGPASSWORD: chatruby
+          PGUSER: postgres
+          PGPASSWORD: postgres
         run: |
           bin/rails db:setup
 

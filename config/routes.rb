@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root "pages#index"
-  resources :users, only: [:new, :create]
+  resources :users, only: [:new, :create, :edit, :show]
   resources :user_sessions, only: [:new, :create, :destroy]
   resources :conversations do
     resources :messages

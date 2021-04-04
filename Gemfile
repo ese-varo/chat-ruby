@@ -37,7 +37,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
   gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
-  gem 'database_cleaner', '~> 1.3.0'
+  gem 'database_cleaner'
   gem 'launchy', '~> 2.5'
   gem 'simplecov', require: false
 end

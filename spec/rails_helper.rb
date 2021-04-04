@@ -9,12 +9,6 @@ require 'capybara/rails'
 
 Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
 
-Capybara.register_driver :selenium_chrome do |app|
-  Capybara::Selenium::Driver.new(app, browser: :chrome)
-end
-
-Capybara.javascript_driver = :selenium_chrome
-
 begin
   ActiveRecord::Migration.maintain_test_schema!
 rescue ActiveRecord::PendingMigrationError => e
@@ -23,19 +17,9 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 RSpec.configure do |config|
 
-  config.use_transactional_fixtures = true
-
-  # config.before(:suite) { DatabaseCleaner.clean_with(:truncation) }
-  # config.before(:each) { DatabaseCleaner.strategy = :transaction }
-  # config.before(:each, js: true) { DatabaseCleaner.strategy = :truncation }
-  # config.before(:each) { DatabaseCleaner.start }
-  # config.before(:each) { DatabaseCleaner.clean }
+  config.use_transactional_fixtures = false
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
-
-  config.before(:each, type: :system) do
-    driven_by :selenium_chrome_headless
-  end
 
   config.include FactoryBot::Syntax::Methods
 

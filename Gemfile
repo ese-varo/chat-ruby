@@ -30,6 +30,15 @@ group :development do
   gem 'pry-rails'
 end
 
+group :development, :deployment do
+  gem 'capistrano', '~> 3.10', require: false
+  gem 'capistrano-rails', '~> 1.5', require: false
+  gem 'capistrano-rbenv', '~> 2.1'
+  gem 'capistrano-db-tasks', require: false
+  gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0', require: false
+  gem 'ed25519', '>= 1.2', '< 2.0'
+end
+
 group :test do
   gem 'capybara', '>= 3.26'
   gem 'capybara-screenshot'
